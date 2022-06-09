@@ -404,7 +404,7 @@ webview {
 #shortcuts {
   position: fixed;
   width: 100%;
-  height: 13%;
+  height: 13vh;
   left: 0px;
   bottom: 0;
   padding-top: 0.75%;
@@ -425,7 +425,11 @@ webview {
   max-height: 90%;
   margin: 0;
 }
-
+#shortcuts a.more-apps {
+  float: right;
+  margin-right: 13px;
+  height: 13vh;
+}
 .setting-list {
   font-size: x-large;
 }
