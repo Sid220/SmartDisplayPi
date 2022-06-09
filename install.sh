@@ -35,12 +35,16 @@ if [ "$continue1" = "y" ]; then
 else
     exit 1
 fi
-if [ $1 == "alpha" ]; then
-  BRANCH="alpha-branch"
-elif [ $1 == "beta" ]; then
-  BRANCH="beta-branch"
-else
+if [ -z "$1" ]; then
   BRANCH="master"
+else
+  if [ "$1" == "alpha" ]; then
+    BRANCH="alpha-branch"
+  elif [ "$1" == "beta" ]; then
+    BRANCH="beta-branch"
+  else
+    BRANCH="master"
+fi
 fi
 sudo apt update && sudo apt upgrade -y
 if [ $? != 0 ]; then
@@ -127,6 +131,6 @@ Terminal=false
 Type=Application" | sudo tee ~/.config/autostart/smartdisplay.desktop
 sudo setcap CAP_SYS_BOOT=+ep /usr/bin/node
 RAWSLIMCONF=$(<assets/slim_CURSOR.conf)
-echo "${RAWSLIMCONF/[SMARTDISPLAYPI_USER_HERE_YOUR_MOM]/"$USER"}" | sudo tee /etc/slim.conf > /dev/null
+echo "${RAWSLIMCONF/\[SMARTDISPLAYPI_USER_HERE_YOUR_MOM]\/"$USER"}" | sudo tee /etc/slim.conf > /dev/null
 echo "Rebooting..."
 sudo reboot

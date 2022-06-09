@@ -27,7 +27,6 @@ var shortcuts = document.createElement("DIV");
 shortcuts.classList.add("animate__animated");
 shortcuts.id = "shortcuts";
 document.body.appendChild(shortcuts);
-
 settings.get("apps", defaultApps).forEach(app => {
     let shortcut = document.createElement("A");
     shortcut.href = root + app.href;
@@ -37,6 +36,12 @@ settings.get("apps", defaultApps).forEach(app => {
     }
     shortcuts.appendChild(shortcut);
 });
+// let shortcut = document.createElement("A");
+// shortcut.href = root + '/more-apps.html';
+// shortcut.classList.add("more-apps")
+// shortcut.innerHTML = `<img src="${root + '/media/more-apps.png'}">`;
+// shortcuts.appendChild(shortcut);
+
 var overlay = document.getElementById("shortcuts");
 document.documentElement.style.setProperty('--animate-duration', '.75s');
 
