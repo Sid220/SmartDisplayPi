@@ -3,7 +3,12 @@
 body {
   padding-bottom: calc(13vh + 5px);
 }
-
+.info {
+  border: 2px solid #4aa3fc;
+  background-color: rgba(91, 173, 255, 0.5);
+  padding: 10px;
+    border-radius: 5px;
+}
 input[type=range] {
   -webkit-appearance: none;
   height: 10px;
@@ -96,7 +101,7 @@ button.green {
   color: #1abc9c;
 }
 
-input[type=text]:focus,
+input[type=text]:not(input[type=text]#url):focus,
 input[type=submit]:hover,
 input[type=number]:focus,
 button:hover,
@@ -273,6 +278,7 @@ webview {
 
 #settingsMenuBar {
   background-color: black;
+  font-size: x-large;
 }
 
 #settingsMenuBar, #editingBar {
@@ -398,7 +404,7 @@ webview {
 #shortcuts {
   position: fixed;
   width: 100%;
-  height: 13%;
+  height: 13vh;
   left: 0px;
   bottom: 0;
   padding-top: 0.75%;
@@ -419,7 +425,11 @@ webview {
   max-height: 90%;
   margin: 0;
 }
-
+#shortcuts a.more-apps {
+  float: right;
+  margin-right: 13px;
+  height: 13vh;
+}
 .setting-list {
   font-size: x-large;
 }
