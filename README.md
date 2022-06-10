@@ -11,7 +11,9 @@ An awesome smart display powered by Google Assistant and Raspberry Pi.
 * Settings page
 
 ## Screenshots!
-
+![img.png](assets/screenshots/img.png)
+![img.png](assets/screenshots/img1.png)
+![img.png](assets/screenshots/img2.png)
 ## Required:
 * Raspberry Pi 3B or newer (At *least* 1GB of memory)
 * *Minimum* 8GB SD card
@@ -20,9 +22,18 @@ An awesome smart display powered by Google Assistant and Raspberry Pi.
 ## Installation guide:
 Install Ubuntu 21.10 and then run:
 ```bash
-cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh
+cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh stable
 ```
-
+### Beta [male] testing
+Install Ubuntu 21.10 and then run:
+```bash
+cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh beta
+```
+### Alpha [male] testing
+Install Ubuntu 21.10 and then run:
+```bash
+cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh alpha
+```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Any help or feedback will greatly be appreciated.
 
