@@ -129,8 +129,13 @@ Name=SmartDisplayPi
 Exec=bash -c 'cd ~/SmartDisplayPi && ./kiosk.sh'
 Terminal=false
 Type=Application" | sudo tee ~/.config/autostart/smartdisplay.desktop
+echo "[Desktop Entry]
+Name=LXPolKit
+Exec=bash -c 'lxpolkit'
+Terminal=false
+Type=Application" | sudo tee ~/.config/autostart/lxpolkit.desktop
 sudo setcap CAP_SYS_BOOT=+ep /usr/bin/node
 RAWSLIMCONF=$(<assets/slim_CURSOR.conf)
-echo "${RAWSLIMCONF/\[SMARTDISPLAYPI_USER_HERE_YOUR_MOM]\/"$USER"}" | sudo tee /etc/slim.conf > /dev/null
+echo "${RAWSLIMCONF/\[SMARTDISPLAYPI_USER_HERE_YOUR_MOM\]/"$USER"}" | sudo tee /etc/slim.conf > /dev/null
 echo "Rebooting..."
 sudo reboot

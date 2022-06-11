@@ -20,17 +20,17 @@ An awesome smart display powered by Google Assistant and Raspberry Pi.
 * Internet connection
 
 ## Installation guide:
-Install Ubuntu 21.10 and then run:
+[Install Ubuntu 21.10](https://ubuntu.com/download/raspberry-pi/thank-you?version=21.10&architecture=server-arm64+raspi) and then run:
 ```bash
 cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh stable
 ```
 ### Beta [male] testing
-Install Ubuntu 21.10 and then run:
+[Install Ubuntu 21.10](https://ubuntu.com/download/raspberry-pi/thank-you?version=21.10&architecture=server-arm64+raspi) and then run:
 ```bash
 cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh beta
 ```
 ### Alpha [male] testing
-Install Ubuntu 21.10 and then run:
+[Install Ubuntu 21.10](https://ubuntu.com/download/raspberry-pi/thank-you?version=21.10&architecture=server-arm64+raspi) and then run:
 ```bash
 cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh alpha
 ```
