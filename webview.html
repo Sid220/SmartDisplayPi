@@ -34,6 +34,12 @@
         webview.addEventListener("did-stop-loading", () => {
             injectScript(webview);
         });
+        webview.addEventListener('did-fail-load', (error) => {
+            console.log(error.errorCode);
+            if (error.isMainFrame) {
+                webview.loadURL('file:///' + root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+            }
+        });
     </script>
 </body>
 
