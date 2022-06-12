@@ -23,6 +23,9 @@
     <script>
         document.getElementById("error").innerHTML = decodeURI(new URLSearchParams(window.location.search).get('error')).replace("ERR_", "");
         document.getElementById("errorCode").innerHTML = "Error Code: " + decodeURI(new URLSearchParams(window.location.search).get('errorcode'));
+        if(decodeURI(new URLSearchParams(window.location.search).get('error')).replace("ERR_", "") === "INTERNET_DISCONNECTED"){
+            document.getElementById("error").innerHTML = "No Internet!<br><button onclick='window.location.href = `assets/dino/index.html`'>Play a game</button>";
+        }
     </script>
 </body>
 
