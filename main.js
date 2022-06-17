@@ -8,12 +8,16 @@ const createWindow = () => {
             contextIsolation: false,
             webviewTag: true,
         }
-    })
-
-    win.loadFile('index.html');
+    });
     const Store = require('electron-store');
     const settings = new Store();
     var template;
+    if(settings.get("virgin", true)) {
+        win.loadFile('Setup/setup0.html');
+    }
+    else {
+        win.loadFile('index.html');
+    }
     if (settings.get("devMode", false) === false) {
         win.kiosk = true
         template = [
