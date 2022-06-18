@@ -41,6 +41,7 @@
     function checkConnection() {
       if (navigator.onLine) {
         settings.set("virgin", false);
+        //window.location = "setup2.html";
         window.location = "../index.html";
       }
       else {

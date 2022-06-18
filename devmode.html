@@ -55,7 +55,7 @@
                     settings.set("devMode", true);
                     console.log("Rebooting");
                     const child_process = require('child_process');
-                    child_process.exec('pkexec reboot');
+                    child_process.exec('pkexec /sbin/reboot');
                 }, 5100)
             }
             else {

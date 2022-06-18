@@ -113,6 +113,7 @@ if [ $? != 0 ]; then
         exit 1
     fi
 fi
+mkdir ~/.config/autostart
 if ! bash ./updates.sh; then
     echo "There was an error installing other packages. Look above for more info."
     echo -n "Would you like to continue anyway? (y/N): "
@@ -123,7 +124,6 @@ if ! bash ./updates.sh; then
         exit 1
     fi
 fi
-mkdir ~/.config/autostart
 echo "[Desktop Entry]
 Name=SmartDisplayPi
 Exec=bash -c 'cd ~/SmartDisplayPi && ./kiosk.sh'
