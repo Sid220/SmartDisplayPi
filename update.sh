@@ -3,7 +3,7 @@
 echoerr() { printf "%s\n" "$*" >&2; }
 ERR=0
 echo "[DEV]: Fetching latest update..."
-if ! git fetch origin --recurse-submodules=no --progress --prune && git pull ; then
+if ! git pull ; then
     echoerr "There was an error fetching the git repo. Look above for more info. It could be you are not connected to the internet."
     ERR=1
 fi
