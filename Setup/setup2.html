@@ -1,18 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Setup Wifi</title>
-    <link href='style.css' rel='stylesheet' />
-  </head>
-  <body>
-    <style media="screen">
 
-    </style>
-    <iframe src="http://localhost:8081/index.php?page=wpa_conf" frameBorder="0"></iframe>
-    <div id="bar"></div>
-    <div id="title">Setup Wizard</div>
-    <a id="donebutton" href="setup3.html"></a>
-    <div id="done">Done</div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../style.css">
+  <script>
+    const Store = require('electron-store');
+    const settings = new Store();
+  </script>
+  <style>
+    input#nextbutton {
+      display: none;
+    }
+    .err {
+        color: orange;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1 id="bar">Google Assistant <input type="button" class="green" id="nextbutton"
+                                               onclick="checkConnection();" value="Next"></h1>
+<div id="center">
+  <h2 class="words">Would you like to install Google Assistant now? You can install it later.</h2>
+  <input type="button" class="green" id="install" onclick="installGoogleAssistant();" value="Install"> <input type="button" id="skip" onclick="window.location = '../index.html'" value="Skip">
+  <pre style="color: white;display: none; background: black;font-family: auto;padding: 10px;max-height: 50vh;overflow-y: scroll;" id="output"></pre>
+</div>
+<script>
+  const root = require('electron-root-path').rootPath;
+  var myHistory = [];
+  const child_process = require('child_process');
+
+  let runCommand = ({command, onout, onerr, ondone}) => {
+    const proc = child_process.spawn(
+            command,
+            [],
+            {
+              shell: true,
+              stdio: ["ignore", "pipe", "pipe"],
+            },
+    )
+    proc.stdout.on("data", (data) => onout(data.toString()));
+    proc.stdout.on("data", (data) => document.getElementById("output").innerHTML += data.toString());
+    proc.stderr.on("data", (data) => onerr(data.toString()));
+    proc.stderr.on("data", (data) => document.getElementById("output").innerHTML += "<span class='err'>" + data.toString() + "</span>");
+    proc.on("close", (code) => ondone(code))
+  }
+
+  async function doInstall(command) {
+    let entry = {command, stdout: "", stderr: "", error: null, running: true}
+    myHistory.push(entry);
+    myHistory = myHistory
+    let onout = (data) => {
+      entry.stdout += data
+      myHistory = myHistory
+      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
+    }
+    let onerr = (data) => {
+      entry.stderr += data
+      myHistory = myHistory
+      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
+    }
+    let ondone = (code) => {
+      entry.running = false
+      entry.error = (code !== 0)
+      myHistory = myHistory
+      if(entry.error) {
+        document.getElementById("output").innerHTML += "<span class='err'>Error: " + code + "</span>";
+        document.createElement("p").innerText = "There was an error installing Google Assistant. Please check the output for more information and report any issues to the developer. <a href='#' onclick='window.location.reload()'>Retry</a>";
+      }
+      document.getElementById("install").onclick = () => window.location = "../index.html";
+      document.getElementById("install").disabled = false;
+      document.getElementById("install").innerHTML = "Continue";
+      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
+    }
+    runCommand({command,onout,onerr,ondone});
+    console.log(myHistory);
+  }
+
+  function installGoogleAssistant() {
+    document.getElementById("install").disabled = true;
+    document.getElementById("skip").style.display = "none";
+    doInstall('cd ' + root + ' && bash '+ root +'/assets/gassist.sh');
+  }
+</script>
+</body>
+
 </html>

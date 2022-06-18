@@ -17,7 +17,7 @@ function preloadImages(array) {
         img.src = array[i];
     }
 }
-nextImage = "https://cdn.pixabay.com/photo/2021/11/26/17/26/desert-6826299_960_720.jpg";
+nextImage = "file:///" + root + "/media/default-background.jpg";
 function updateBackground() {
     document.getElementById("background").style.backgroundImage = "url(" + nextImage + ")";
     setTimeout(() => {
@@ -45,6 +45,12 @@ window.onload = function () {
         }]);
     widgets.forEach(widget => {
         var webview = document.createElement("webview");
+        webview.addEventListener('did-fail-load', (error) => {
+            console.log(error.errorCode);
+            if (error.isMainFrame) {
+                webview.loadURL('file:///' + root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+            }
+        });
         if (!settings.get("editingHome", false)) {
             if (settings.get("autoloadWidgets", false)) {
                 webview.src = widget.url;

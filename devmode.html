@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/gh/CoderUltraSonic/Jaxit@v3.02.3/jaxit.min.js"></script>
-    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+    <script src="scripts/jaxit.min.js"></script>
     <script type="text/javascript">
+        const hotkeys = require('hotkeys-js');
         hotkeys('ctrl+c', function (event) {
             event.preventDefault();
             window.location = "settings.html";
         });
     </script>
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/CoderUltraSonic/Jaxit@v3.02.3/jaxit.css');
+        @import url('assets/jaxit.css');
     </style>
 </head>
 
@@ -54,7 +54,8 @@
                     const settings = new Store();
                     settings.set("devMode", true);
                     console.log("Rebooting");
-                    require('reboot').rebootImmediately();
+                    const child_process = require('child_process');
+                    child_process.exec('pkexec /sbin/reboot');
                 }, 5100)
             }
             else {
