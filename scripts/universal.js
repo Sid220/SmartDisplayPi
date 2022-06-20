@@ -69,7 +69,7 @@ function googleAssistant(ele) {
                         return;
                     }
                     if(data3.includes("0")) {
-                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.gif';
+                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
                         fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
                     }
                 });
