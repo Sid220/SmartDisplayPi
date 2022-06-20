@@ -72,6 +72,9 @@ function googleAssistant(ele) {
                         googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
                         fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
                     }
+                    if(data3.includes("RESPONDING")) {
+                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
+                    }
                 });
             });
         }
