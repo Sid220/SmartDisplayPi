@@ -45,6 +45,53 @@ settings.get("apps", defaultApps).forEach(app => {
 var overlay = document.getElementById("shortcuts");
 document.documentElement.style.setProperty('--animate-duration', '.75s');
 
+// GOOGLE ASSISTANT
+function googleAssistant(ele) {
+    const fs = require("fs");
+    fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        if(data.includes("0")) {
+            console.log("[DEV]: Google Assistant NOT Started; Starting");
+            fs.writeFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', '1', err2 => {
+                if (err2) {
+                    console.log(err2);
+                    return;
+                }
+            });
+            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
+            fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', () => {
+                fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
+                    if (err3) {
+                        console.log(err3);
+                        return;
+                    }
+                    if(data3.includes("0")) {
+                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.gif';
+                        fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
+                    }
+                });
+            });
+        }
+        if(data.includes("1")) {
+            console.log("[DEV]: Google Assistant Started; NOT Starting");
+        }
+    });
+}
+
+if(settings.get("googleAssistant", false)) {
+    window.googleButton = document.createElement("A");
+    window.googleButton.href = "#";
+    window.googleButton.innerHTML = `<img src="${root + '/assets/gassist/images/GoogleAssistantMicTransparent.png'}">`;
+    window.googleButton.classList.add("google-assistant", "user");
+    shortcuts.appendChild(window.googleButton);
+    window.googleButton.onclick = () => {
+        googleAssistant();
+    }
+}
+
 function closeopen() {
     if (overlay.style.display == "none") {
         const openStart = new Event('openStart');
