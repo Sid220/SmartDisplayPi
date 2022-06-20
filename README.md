@@ -2,7 +2,7 @@
 An awesome smart display powered by Google Assistant and Raspberry Pi.
 ## Features
 
-* <s>Google Assistant</s> Not yet!
+* Google Assistant (hanging by a thread)
 * Main page widgets
 * Built-in browser
 * Built-in onscreen keyboard
@@ -16,7 +16,7 @@ An awesome smart display powered by Google Assistant and Raspberry Pi.
 ![img.png](assets/screenshots/img2.png)
 ## Required:
 * Raspberry Pi 3B or newer (At *least* 1GB of memory)
-* *Minimum* 8GB SD card
+* *Minimum* 16GB SD card
 * Internet connection
 
 ## Installation guide:
@@ -34,10 +34,18 @@ cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x 
 ```bash
 cd ~/ && wget https://tinyurl.com/installsmartdisplay -O install.sh && chmod +x install.sh && ./install.sh alpha
 ```
+##  Installing Google Assistant
+<b>NOTE:</b> Even some taken-for-granted features of Google Assistant like timers don't work. Hot words don't work. Currently, there is no method of triggering it. In other words, don't install it if you value your sanity.<br>
+To install Google Assistant, run:
+```bash
+cd ~/SmartDisplayPi/assets/gassist && bash install.sh
+```
+Odds are it won't work. When it doesn't, please report an issue.
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Any help or feedback will greatly be appreciated.
 
 ## Further Development
-In the near future, we would love to see SmartDisplayPi support Google Assistant!
+In the near future, we would love to see SmartDisplayPi support Google Assistant further as some basic features don't work.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

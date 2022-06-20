@@ -1,0 +1,19 @@
+pcm.!default {
+  type asym
+  capture.pcm "mic"
+  playback.pcm "speaker"
+}
+pcm.mic {
+  type plug
+  slave {
+    pcm "hw:[SMARTDISPLAYPI_MIC_CARD_NUMBER],[SMARTDISPLAYPI_MIC_DEVICE_NUMBER]"
+    rate 48000
+  }
+}
+pcm.speaker {
+  type plug
+  slave {
+    pcm "hw:[SMARTDISPLAYPI_SPEAK_CARD_NUMBER],[SMARTDISPLAYPI_SPEAK_DEVICE_NUMBER]"
+  }
+}
+
