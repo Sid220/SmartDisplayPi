@@ -62,7 +62,9 @@ function googleAssistant(ele) {
                 }
             });
             googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
-            fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', () => {
+            fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
+                interval: 1000
+            }, () => {
                 fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
                     if (err3) {
                         console.log(err3);
@@ -73,7 +75,9 @@ function googleAssistant(ele) {
                         fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
                     }
                     if(data3.includes("RESPONDING")) {
-                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
+                        if(googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif') {
+                            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
+                        }
                     }
                 });
             });

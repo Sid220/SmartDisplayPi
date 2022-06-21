@@ -102,6 +102,21 @@ echo "${RAWSERVICESCRIPT//\[SMARTDISPLAYPI_DEVICE_MODEL_ID\]/"$DEVICEMODELID"}" 
 echo "The hard part is over! Sit back, relax and watch as we finish up some things..."
 sudo systemctl enable assistant.service
 sudo systemctl start assistant.service
-mv pushtotalk.py /home/"$USER"/.local/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
+cp pushtotalk.py /home/"$USER"/.local/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
 echo "[DEV]: Script to run on startup: complete."
+
+cd snowboy || exit 1
+npm install snowboy node-record-lpcm16 play-sound
+cp ./snowboy.desktop ~/.config/autostart/snowboy.desktop
+echo "[DEV]: Set up SnowBoy"
+
 echo "Complete!"
+echo "You can now talk to your Google Assistant by saying \"Alexa\". Kinda counter-intuitive, but it works."
+echo "Rebooting in..."
+for i in {5..1}
+do
+    echo "$i"
+    sleep 1
+done
+echo "Rebooting..."
+sudo reboot

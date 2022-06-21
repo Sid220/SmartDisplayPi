@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=SnowBoy
+Exec=bash -c 'cd ~/SmartDisplayPi/assets/gassist/ && node microphone.js'
+Terminal=false
+Type=Application
