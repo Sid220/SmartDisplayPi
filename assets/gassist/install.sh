@@ -108,7 +108,8 @@ sudo systemctl start assistant.service
 cp pushtotalk.py env/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
 echo "[DEV]: Script to run on startup: complete."
 
-npm install snowboy node-record-lpcm16 play-sound
+npm install --save snowboy
+npm install node-record-lpcm16 play-sound
 cp ./snowboy.desktop ~/.config/autostart/snowboy.desktop
 echo "[DEV]: Finished setting up SnowBoy"
 
