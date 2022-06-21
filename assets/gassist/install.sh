@@ -72,8 +72,6 @@ python3 -m pip install --upgrade google-assistant-sdk[samples]
 python3 -m pip install --upgrade google-auth-oauthlib[tool]
 echo "[DEV]: Installing necessary pip packages: complete."
 
-mkdir ~/googleassistant
-cd ~/googleassistant || exit 1
 echo -n "Please type the location of your Google Assistant Credentials JSON file (full path, including .json file extension): "
 read -r credentialsJSONLOCATION
 cp "$credentialsJSONLOCATION" credentials.json
