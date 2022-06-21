@@ -55,7 +55,7 @@ echo "[DEV]: System update: complete."
 
 echo "[DEV]: Installing necessary packages..."
 sudo apt install python3-dev python3-venv python3-pip libssl-dev libffi-dev libportaudio2
-if $? != 0; then
+if [ $? != 0 ]; then
     echo "[DEV]: There was an error installing packages. Look above for more info."
     exit 1
 fi
