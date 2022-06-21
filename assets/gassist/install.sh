@@ -44,7 +44,7 @@ else
     echo "Please run this script again and make sure you have selected the correct mic card and device number."
     exit 1
 fi
-echo "$RAWASOUNDCONF" # | sudo tee /home/"$USER"/.asoundrc > /dev/null
+echo "$RAWASOUNDCONF" | sudo tee /home/"$USER"/.asoundrc > /dev/null
 echo "[DEV]: Audio setup: complete."
 
 if ! sudo apt update && sudo apt upgrade -y ; then
