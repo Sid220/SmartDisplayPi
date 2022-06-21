@@ -91,8 +91,9 @@ google-oauthlib-tool --client-secrets credentials.json \
 echo "[DEV]: Google Assistant OAuth: complete."
 
 echo "[DEV]: Making script to run on startup..."
-RAWSERVICE=$(<assistant.service)
-echo "${RAWSERVICE//\[SMARTDISPLAYPI_USER_PLACEHOLDER\]/"$USER"}" | sudo tee ./assistant.service > /dev/null
+# RAWSERVICE=$(<assistant.service)
+# echo "${RAWSERVICE//\[SMARTDISPLAYPI_USER_PLACEHOLDER\]/"$USER"}" | sudo tee ./assistant.service > /dev/null
+cp ./assistant.desktop ~/.config/autostart/assistant.desktop
 echo -n "Please enter your PROJECT ID: "
 read -r PROJECTID
 echo -n "Please enter your DEVICE MODEL ID: "
