@@ -99,7 +99,7 @@ echo "The hard part is over! Sit back, relax and watch as we finish up some thin
 sudo cp assistant.service /lib/systemd/system/assistant.service
 sudo systemctl enable assistant.service
 sudo systemctl start assistant.service
-cp pushtotalk.py /home/"$USER"/.local/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
+cp pushtotalk.py env/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
 echo "[DEV]: Script to run on startup: complete."
 
 npm install snowboy node-record-lpcm16 play-sound
