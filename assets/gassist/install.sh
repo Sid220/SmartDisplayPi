@@ -70,6 +70,7 @@ python3 -m pip install 'google_assistant_library-1.1.0-py2.py3-none-linux_aarch6
 python3 -m pip install --upgrade google-assistant-library
 python3 -m pip install --upgrade google-assistant-sdk[samples]
 python3 -m pip install --upgrade google-auth-oauthlib[tool]
+python3 -m pip install watchdog
 echo "[DEV]: Installing necessary pip packages: complete."
 
 echo -n "Please type the location of your Google Assistant Credentials JSON file (full path, including .json file extension): "
