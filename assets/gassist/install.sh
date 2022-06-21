@@ -100,6 +100,7 @@ RAWSERVICESCRIPT=$(<start_assistant.sh)
 RAWSERVICESCRIPT="${RAWSERVICESCRIPT//\[SMARTDISPLAYPI_PROJECT_ID\]/"$PROJECTID"}"
 echo "${RAWSERVICESCRIPT//\[SMARTDISPLAYPI_DEVICE_MODEL_ID\]/"$DEVICEMODELID"}" | sudo tee ./start_assistant.sh > /dev/null
 echo "The hard part is over! Sit back, relax and watch as we finish up some things..."
+sudo cp assistant.service /lib/systemd/system/assistant.service
 sudo systemctl enable assistant.service
 sudo systemctl start assistant.service
 cp pushtotalk.py /home/"$USER"/.local/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
