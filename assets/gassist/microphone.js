@@ -2,6 +2,7 @@ const record = require('node-record-lpcm16');
 const Detector = require('snowboy').Detector;
 const Models = require('snowboy').Models;
 const fs = require('fs');
+const player = require('play-sound')(opts = {})
 
 const file = '/home/' + require("os").userInfo().username + '/SmartDisplayPi/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother';
 const models = new Models();
@@ -35,7 +36,7 @@ detector.on('error', function () {
 });
 
 function googleAssistant() {
-   console.log("Assisting");
+   console.log("[DEV]: Assisting");
    fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
@@ -49,6 +50,10 @@ function googleAssistant() {
                     return;
                 }
             });
+	   player.play('resources/dong.wav', function (err) {
+   if (err) throw err;
+   console.log("[DEV]: Audio finished");
+ });
         }
         if(data.includes("1")) {
             console.log("[DEV]: Google Assistant Started; NOT Starting");
