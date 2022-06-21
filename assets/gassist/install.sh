@@ -85,8 +85,6 @@ google-oauthlib-tool --client-secrets ~/googleassistant/credentials.json \
 --save --headless
 echo "[DEV]: Google Assistant OAuth: complete."
 
-cd ~/SmartDisplayPi/assets/gassist || exit 1
-
 echo "[DEV]: Making script to run on startup..."
 RAWSERVICE=$(<assistant.service)
 echo "${RAWSERVICE//\[SMARTDISPLAYPI_USER_PLACEHOLDER\]/"$USER"}" | sudo tee ./assistant.service > /dev/null
