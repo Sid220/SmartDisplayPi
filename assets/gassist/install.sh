@@ -84,7 +84,7 @@ echo "[DEV]: Credentials file: complete."
 
 echo "Visit the link the next command will give to you. MAKE SURE YOU AGREE TO EVERYTHING!"
 sleep 3
-google-oauthlib-tool --client-secrets ~/googleassistant/credentials.json \
+google-oauthlib-tool --client-secrets credentials.json \
 --scope https://www.googleapis.com/auth/assistant-sdk-prototype \
 --scope https://www.googleapis.com/auth/gcm \
 --save --headless
