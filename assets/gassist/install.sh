@@ -80,7 +80,7 @@ cp "$credentialsJSONLOCATION" credentials.json
 echo "[DEV]: Credentials file: complete."
 
 echo "Visit the link the next command will give to you. MAKE SURE YOU AGREE TO EVERYTHING!"
-sleep 1
+sleep 3
 google-oauthlib-tool --client-secrets ~/googleassistant/credentials.json \
 --scope https://www.googleapis.com/auth/assistant-sdk-prototype \
 --scope https://www.googleapis.com/auth/gcm \
@@ -107,7 +107,7 @@ echo "[DEV]: Script to run on startup: complete."
 
 npm install snowboy node-record-lpcm16 play-sound
 cp ./snowboy.desktop ~/.config/autostart/snowboy.desktop
-echo "[DEV]: Set up SnowBoy"
+echo "[DEV]: Finished setting up SnowBoy"
 
 echo "Complete!"
 echo "You can now talk to your Google Assistant by saying \"Alexa\". Kinda counter-intuitive, but it works."
