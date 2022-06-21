@@ -72,6 +72,9 @@ python3 -m pip install --upgrade google-assistant-sdk[samples]
 python3 -m pip install --upgrade google-auth-oauthlib[tool]
 python3 -m pip install -r 'GassistPi-pip-requirements.txt'
 python3 -m pip install watchdog
+python3 -m pip install google-assistant-grpc --upgrade
+python3 -m pip install google-assistant-sdk --upgrade
+python3 -m pip install tenacity --upgrade
 echo "[DEV]: Installing necessary pip packages: complete."
 
 echo -n "Please type the location of your Google Assistant Credentials JSON file (full path, including .json file extension): "
