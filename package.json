@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "electron": "^16.0.7"
+    "electron": "^16.2.6"
   },
   "name": "smartdisplaypi",
   "description": "An awesome smart display powered by Google Assistant and Raspberry Pi. ## NOTE This is still in development. Google Assistant is currently broken due to the libraries. A fix is on the way. For now, please use [GassistPi](https://github.com/shivasiddharth/GassistPi)",
