@@ -49,7 +49,7 @@ document.documentElement.style.setProperty('--animate-duration', '.75s');
 if(settings.get("googleAssistant", false)) {
     const fs = require("fs");
     fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
-        interval: 1000
+        interval: 500
     }, () => {
         fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
             if (err3) {
