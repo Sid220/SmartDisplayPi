@@ -145,6 +145,9 @@ class SampleAssistant(object):
                 logging.info('End of audio request detected.')
                 logging.info('Stopping recording.')
                 self.conversation_stream.stop_recording()
+                f = open('/home/' + os.getlogin() + '/SmartDisplayPi/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', "a")
+                f.write("RESPONDING")
+                f.close()
             if resp.speech_results:
                 logging.info('Transcript of user request: "%s".',
                              ' '.join(r.transcript
