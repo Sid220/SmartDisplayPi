@@ -60,7 +60,6 @@ CLOSE_MICROPHONE = embedded_assistant_pb2.DialogStateOut.CLOSE_MICROPHONE
 PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
 DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 
-
 class SampleAssistant(object):
     """Sample Assistant that supports conversations and device actions.
 
@@ -179,8 +178,9 @@ class SampleAssistant(object):
                 if fs:
                     device_actions_futures.extend(fs)
             if self.display and resp.screen_out.data:
-                system_browser = browser_helpers.system_browser
-                system_browser.display(resp.screen_out.data)
+                f = open('/home/' + os.getlogin() + '/SmartDisplayPi/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.yourmother', "w")
+                f.write(resp.screen_out.data.decode("utf-8"))
+                f.close()
 
         if len(device_actions_futures):
             logging.info('Waiting for device executions to complete.')
