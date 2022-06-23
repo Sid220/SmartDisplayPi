@@ -21,7 +21,7 @@ nextImage = "file:///" + root + "/media/default-background.jpg";
 function updateBackground() {
     document.getElementById("background").style.backgroundImage = "url(" + nextImage + ")";
     setTimeout(() => {
-        fetch("https://www.vestal.tk/smartdisplaypi-backend/background.php")
+        fetch("https://backend.sdp.vestal.tk/background.php")
             .then(response => response.text())
             .then(data => {
                 nextImage = data;
