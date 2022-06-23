@@ -59,9 +59,9 @@ if(settings.get("googleAssistant", false)) {
             if (data3.includes("0")) {
                 googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
             }
-            if(data3.includes("1")) {
-                if(googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png') {
-                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png';
+            if(data3.includes("1") && !data3.includes("RESPONDING")) {
+                if(googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif') {
+                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
                 }
             }
             if (data3.includes("RESPONDING")) {
