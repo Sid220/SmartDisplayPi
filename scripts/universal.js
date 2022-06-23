@@ -46,6 +46,28 @@ var overlay = document.getElementById("shortcuts");
 document.documentElement.style.setProperty('--animate-duration', '.75s');
 
 // GOOGLE ASSISTANT
+if(settings.get("googleAssistant", false)) {
+    const fs = require("fs");
+    fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
+        interval: 1000
+    }, () => {
+        fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
+            if (err3) {
+                console.log(err3);
+                return;
+            }
+            if (data3.includes("0")) {
+                googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
+                fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
+            }
+            if (data3.includes("RESPONDING")) {
+                if (googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif') {
+                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
+                }
+            }
+        })
+    })
+}
 function googleAssistant(ele) {
     const fs = require("fs");
     fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err, data) => {
@@ -60,26 +82,6 @@ function googleAssistant(ele) {
                     console.log(err2);
                     return;
                 }
-            });
-            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
-            fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
-                interval: 1000
-            }, () => {
-                fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
-                    if (err3) {
-                        console.log(err3);
-                        return;
-                    }
-                    if(data3.includes("0")) {
-                        googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
-                        fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
-                    }
-                    if(data3.includes("RESPONDING")) {
-                        if(googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif') {
-                            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
-                        }
-                    }
-                });
             });
         }
         if(data.includes("1")) {
