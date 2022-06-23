@@ -58,11 +58,15 @@ if(settings.get("googleAssistant", false)) {
             }
             if (data3.includes("0")) {
                 googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
-                fs.unwatchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother');
+            }
+            if(data3.includes("1")) {
+                if(googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png') {
+                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png';
+                }
             }
             if (data3.includes("RESPONDING")) {
-                if (googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif') {
-                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantDotsTransparent.gif';
+                if (googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantTransparent.gif') {
+                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantTransparent.gif';
                 }
             }
         })
@@ -77,6 +81,7 @@ function googleAssistant(ele) {
         }
         if(data.includes("0")) {
             console.log("[DEV]: Google Assistant NOT Started; Starting");
+            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png';
             fs.writeFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', '1', err2 => {
                 if (err2) {
                     console.log(err2);
