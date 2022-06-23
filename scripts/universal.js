@@ -81,7 +81,6 @@ function googleAssistant(ele) {
         }
         if(data.includes("0")) {
             console.log("[DEV]: Google Assistant NOT Started; Starting");
-            googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.png';
             fs.writeFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', '1', err2 => {
                 if (err2) {
                     console.log(err2);
