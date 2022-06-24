@@ -60,6 +60,28 @@ CLOSE_MICROPHONE = embedded_assistant_pb2.DialogStateOut.CLOSE_MICROPHONE
 PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
 DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 
+SmartDisplayPiJSInjectionCode = """<script>
+/**
+* Mutation Observer Helper function
+* //developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe
+* @param {string} sel The DOM selector to watch
+* @param {object} opt MutationObserver options
+* @param {function} cb Pass Mutation object to a callback function
+*/
+const Observe = (sel, opt, cb) => {
+ const Obs = new MutationObserver((m) => [...m].forEach(cb));
+ document.querySelectorAll(sel).forEach(el => Obs.observe(el, opt));
+};
+
+Observe("body", {
+ attributesList: ["style"], // Only the "style" attribute
+ attributeOldValue: true,   // Report also the oldValue
+}, (m) => {
+ if(document.body.style.display === "none") {
+     parent.document.getElementById("googleAssistantOutput").remove();
+ }
+});</script>"""
+
 class SampleAssistant(object):
     """Sample Assistant that supports conversations and device actions.
 
@@ -178,8 +200,8 @@ class SampleAssistant(object):
                 if fs:
                     device_actions_futures.extend(fs)
             if self.display and resp.screen_out.data:
-                f = open('/home/' + os.getlogin() + '/SmartDisplayPi/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.yourmother', "w")
-                f.write(resp.screen_out.data.decode("utf-8"))
+                f = open('/home/' + os.getlogin() + '/SmartDisplayPi/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.html', "w")
+                f.write(resp.screen_out.data.decode("utf-8") + SmartDisplayPiJSInjectionCode)
                 f.close()
 
         if len(device_actions_futures):

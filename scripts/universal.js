@@ -48,15 +48,14 @@ document.documentElement.style.setProperty('--animate-duration', '.75s');
 // GOOGLE ASSISTANT
 if(settings.get("googleAssistant", false)) {
     const fs = require("fs");
-    fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.yourmother', () => {
-        fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.yourmother', 'utf8', (err4, data4) => {
-            if (err4) {
-                console.log(err4);
-                return;
-            }
-            console.log(data4)
-        })
-        console.log()
+    fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.html', () => {
+        if(!document.getElementById("googleAssistantOutput")) {
+            let googleAssistantOutput = document.createElement("iframe");
+            document.body.appendChild(googleAssistantOutput);
+            googleAssistantOutput.id = "googleAssistantOutput";
+            googleAssistantOutput.classList.add("google-assistant-output");
+            googleAssistantOutput.src = root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.html';
+        }
     })
     fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
         interval: 500
@@ -179,6 +178,7 @@ if (settings.get("ambient", true) && !window.location.href.includes("ambient.htm
 
 const BetterBoard = require('betterboard');
 const { link } = require('original-fs');
+const fs = require("fs");
 BetterBoard.init({
     keysArrayOfObjects: [
         {
