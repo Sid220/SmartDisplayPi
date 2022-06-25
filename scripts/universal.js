@@ -23,28 +23,88 @@ const defaultApps = [{
     icon: "/media/settings.png",
     href: "/settings.html"
 }];
+
+const fullApps = {
+    initialized: false,
+    shown: false,
+    apps: [],
+    init: function() {
+        this.appList = document.createElement("div");
+        this.appList.style.display = "none";
+        document.body.appendChild(this.appList);
+        this.appList.classList.add("full-apps");
+        this.searchBar = document.createElement("input");
+        this.searchBar.type = "text";
+        this.searchBar.placeholder = "Search Apps";
+        this.searchBar.classList.add("full-apps-search");
+        this.searchBar.oninput = () => {
+            search(this.searchBar.value);
+        }
+        this.noResults = document.createElement("div");
+        this.noResults.innerHTML = "No results."
+        this.noResults.style.display = "none";
+        this.noResults.style.color = "#fff";
+        this.appList.appendChild(this.searchBar);
+        this.appList.appendChild(this.noResults);
+        settings.get("apps", defaultApps).forEach(app => {
+            let shortcut = document.createElement("A");
+            shortcut.href = root + app.href;
+            shortcut.innerHTML = `<img src="${root + app.icon}">`;
+            shortcut.dataset.smartdisplaypiName = app.name;
+            if (app.icon.includes("/media/usr/")) {
+                shortcut.classList.add("usr");
+            }
+            shortcut.classList.add('app-list-app');
+            this.appList.appendChild(shortcut);
+            this.apps.push(app.name);
+        });
+        this.initialized = true;
+    },
+    show: function() {
+        this.appList.style.display = "block";
+        this.shown = true;
+    },
+    hide: function() {
+        this.appList.style.display = "none";
+        this.shown = false;
+    }
+}
+const fuzzysort = require('fuzzysort');
+function search(query) {
+    let results = fuzzysort.go(query, fullApps.apps, {
+        limit: 50,
+        all: true
+    });
+    fullApps.resultArray = [];
+    results.forEach(result => {
+        fullApps.resultArray.push(result.target);
+    })
+    fullApps.noResults.style.display = "none";
+    fullApps.appList.childNodes.forEach((element) => {
+        if (element !== fullApps.searchBar) {
+            if (fullApps.resultArray.includes(element.dataset.smartdisplaypiName)) {
+                element.style.display = "inline";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    });
+    if(fullApps.resultArray.length === 0) {
+        fullApps.noResults.style.display = "block";
+    }
+}
 var shortcuts = document.createElement("DIV");
-shortcuts.classList.add("animate__animated");
 shortcuts.id = "shortcuts";
 document.body.appendChild(shortcuts);
 settings.get("apps", defaultApps).forEach(app => {
-    let shortcut = document.createElement("A");
-    shortcut.href = root + app.href;
-    shortcut.innerHTML = `<img src="${root + app.icon}">`;
-    if(app.icon.includes("/media/usr/")) {
-        shortcut.classList.add("usr");
-    }
-    shortcuts.appendChild(shortcut);
+        let shortcut = document.createElement("A");
+        shortcut.href = root + app.href;
+        shortcut.innerHTML = `<img src="${root + app.icon}">`;
+        if (app.icon.includes("/media/usr/")) {
+            shortcut.classList.add("usr");
+        }
+        shortcuts.appendChild(shortcut);
 });
-// let shortcut = document.createElement("A");
-// shortcut.href = root + '/more-apps.html';
-// shortcut.classList.add("more-apps")
-// shortcut.innerHTML = `<img src="${root + '/media/more-apps.png'}">`;
-// shortcuts.appendChild(shortcut);
-
-var overlay = document.getElementById("shortcuts");
-document.documentElement.style.setProperty('--animate-duration', '.75s');
-
 // GOOGLE ASSISTANT
 if(settings.get("googleAssistant", false)) {
     const fs = require("fs");
@@ -115,27 +175,14 @@ if(settings.get("googleAssistant", false)) {
 }
 
 function closeopen() {
-    if (overlay.style.display == "none") {
-        const openStart = new Event('openStart');
-        document.dispatchEvent(openStart);
-        console.log("opening");
-        overlay.style.display = "block";
-        overlay.classList.replace('animate__slideOutDown', 'animate__slideInUp');
-        overlay.addEventListener('animationend', () => {
-            overlay.style.display = "block";
-            document.body.style.paddingBottom = "calc(13vh + 7px)";
-
-        });
-    } else {
-        const closeStart = new Event('closeStart');
-        document.dispatchEvent(closeStart);
-        console.log("closing");
-        overlay.classList.remove("animate__slideInUp")
-        overlay.classList.add("animate__slideOutDown")
-        overlay.addEventListener('animationend', () => {
-            overlay.style.display = "none";
-            document.body.style.paddingBottom = "0";
-        });
+    if(!fullApps.initialized) {
+        fullApps.init();
+    }
+    if(fullApps.shown) {
+        fullApps.hide();
+    }
+    else {
+        fullApps.show();
     }
 }
 homebutton = document.createElement("DIV");
@@ -150,16 +197,7 @@ homebutton.onclick = () => {
 homebutton.addEventListener("dblclick", () => {
    window.location = root + "/index.html";
 })
-function resize() {
-    document.getElementById("shortcuts").firstChild.style.marginLeft = (document.getElementById("shortcuts").firstChild.offsetWidth + (0.015 * document.body.offsetWidth)) + "px";
-    homebutton.style.height = document.getElementById("shortcuts").firstChild.offsetWidth + "px";
-    homebutton.style.width = document.getElementById("shortcuts").firstChild.offsetWidth + "px";
-}
-resize();
-setTimeout(resize, 100);
-// DEVELOPMENT PURPOSES ONLY!!!
-window.addEventListener('resize', resize);
-// Back to your regularly scheduled programming.
+
 if (settings.get("ambient", true) && !window.location.href.includes("ambient.html")) {
     function ambient() {
         window.location.href = root + "/ambient.html";
@@ -177,7 +215,6 @@ if (settings.get("ambient", true) && !window.location.href.includes("ambient.htm
 }
 
 const BetterBoard = require('betterboard');
-const { link } = require('original-fs');
 const fs = require("fs");
 BetterBoard.init({
     keysArrayOfObjects: [
