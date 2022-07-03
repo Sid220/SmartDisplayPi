@@ -55,7 +55,7 @@ fi
 echo "[DEV]: System update: complete."
 
 echo "[DEV]: Installing necessary packages..."
-sudo apt install python3-dev python3-venv python3-pip libssl-dev libffi-dev libportaudio2
+sudo apt install python3-dev python3-venv python3-pip libssl-dev libffi-dev libportaudio2 -y
 if [ $? != 0 ]; then
     echo "[DEV]: There was an error installing packages. Look above for more info."
     exit 1
@@ -71,6 +71,7 @@ python3 -m pip install 'google_assistant_library-1.1.0-py2.py3-none-linux_aarch6
 python3 -m pip install --upgrade google-assistant-library
 python3 -m pip install --upgrade google-assistant-sdk[samples]
 python3 -m pip install --upgrade google-auth-oauthlib[tool]
+sudo apt install portaudio19-dev python3-pyaudio -y
 python3 -m pip install -r 'GassistPi-pip-requirements.txt'
 python3 -m pip install watchdog
 python3 -m pip install google-assistant-grpc --upgrade
