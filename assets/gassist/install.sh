@@ -1,5 +1,6 @@
 #!/bin/bash
 cd ~/SmartDisplayPi/assets/gassist || exit 1
+sudo apt install alsa-utils -y
 arecord -l
 echo -n "Please type the card number of the microphone you would like to use (do not include \"card\"): "
 read -r micCARDNUMBER
@@ -15,6 +16,7 @@ RAWASOUNDCONF="${RAWASOUNDCONF/\[SMARTDISPLAYPI_MIC_CARD_NUMBER\]/"$micCARDNUMBE
 RAWASOUNDCONF="${RAWASOUNDCONF/\[SMARTDISPLAYPI_MIC_DEVICE_NUMBER\]/"$micDEVICENUMBER"}"
 RAWASOUNDCONF="${RAWASOUNDCONF/\[SMARTDISPLAYPI_SPEAK_CARD_NUMBER\]/"$speakCARDNUMBER"}"
 RAWASOUNDCONF="${RAWASOUNDCONF/\[SMARTDISPLAYPI_SPEAK_DEVICE_NUMBER\]/"$speakDEVICENUMBER"}"
+echo "$RAWASOUNDCONF" | sudo tee /home/"$USER"/.asoundrc > /dev/null
 speaker-test -t wav -l 2
 echo -n "Did you hear that sound? (y/N): "
 read -r speakDIDHEAR
@@ -44,7 +46,6 @@ else
     echo "Please run this script again and make sure you have selected the correct mic card and device number."
     exit 1
 fi
-echo "$RAWASOUNDCONF" | sudo tee /home/"$USER"/.asoundrc > /dev/null
 echo "[DEV]: Audio setup: complete."
 
 if ! sudo apt update && sudo apt upgrade -y ; then
