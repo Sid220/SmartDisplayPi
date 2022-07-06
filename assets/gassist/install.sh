@@ -93,9 +93,10 @@ google-oauthlib-tool --client-secrets credentials.json \
 echo "[DEV]: Google Assistant OAuth: complete."
 
 echo "[DEV]: Making script to run on startup..."
-# RAWSERVICE=$(<assistant.service)
-# echo "${RAWSERVICE//\[SMARTDISPLAYPI_USER_PLACEHOLDER\]/"$USER"}" | sudo tee ./assistant.service > /dev/null
 cp ./assistant.desktop ~/.config/autostart/assistant.desktop
+# Fixed Audio Helper File
+rm ./env/lib/python3.9/site-packages/googlesamples/assistant/grpc/audio_helpers.py
+cp ./audio_helpers.py ./env/lib/python3.9/site-packages/googlesamples/assistant/grpc
 echo -n "Please enter your PROJECT ID: "
 read -r PROJECTID
 echo -n "Please enter your DEVICE MODEL ID: "
@@ -103,17 +104,17 @@ read -r DEVICEMODELID
 RAWSERVICESCRIPT=$(<start_assistant.sh)
 RAWSERVICESCRIPT="${RAWSERVICESCRIPT//\[SMARTDISPLAYPI_PROJECT_ID\]/"$PROJECTID"}"
 echo "${RAWSERVICESCRIPT//\[SMARTDISPLAYPI_DEVICE_MODEL_ID\]/"$DEVICEMODELID"}" | sudo tee ./start_assistant.sh > /dev/null
+echo -n "Please enter your PORCUPINE ACCESS KEY: "
+read -r PORCUPINEACCESSKEY
 echo "The hard part is over! Sit back, relax and watch as we finish up some things..."
-sudo cp assistant.service /lib/systemd/system/assistant.service
-sudo systemctl enable assistant.service
-sudo systemctl start assistant.service
 cp pushtotalk.py env/lib/python3.9/site-packages/googlesamples/assistant/grpc/pushtotalk.py
 echo "[DEV]: Script to run on startup: complete."
 
-npm install --save snowboy
-npm install node-record-lpcm16 play-sound
-cp ./snowboy.desktop ~/.config/autostart/snowboy.desktop
-echo "[DEV]: Finished setting up SnowBoy"
+sudo apt install pavucontrol -y
+python3 -m pip install pvporcupine pvporcupinedemo pv_recorder
+RAWPORCUPINESCRIPT=$(<start_porcupine.sh)
+echo "${RAWPORCUPINESCRIPT//\[SMARTDISPLAYPI_PORCUPINE_ACCESS_KEY\]/"$PORCUPINEACCESSKEY"}" | sudo tee ./start_porcupine.sh > /dev/null
+echo "[DEV]: Finished setting up Porcupine"
 
 echo "Complete!"
 echo "You can now talk to your Google Assistant by saying \"Alexa\". Kinda counter-intuitive, but it works."

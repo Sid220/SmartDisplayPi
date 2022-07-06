@@ -16,7 +16,7 @@ const createWindow = () => {
         win.loadFile('Setup/setup0.html');
     }
     else {
-        win.loadFile('index.html');
+        win.loadFile('settings/editMenu.html');
     }
     if (settings.get("devMode", false) === false) {
         win.kiosk = true

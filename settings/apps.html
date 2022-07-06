@@ -94,7 +94,6 @@
         <span class="close">&times;</span><br>
             <input type="text" oninput="search(this.value)" />
             <div id="icons"></div>
-            <script src="../scripts/iconPicker.js"></script>
     </div>
 
 </div>
@@ -107,6 +106,7 @@
 <ul class="setting-list" id="ul">
 </ul>
 <script src="../scripts/universal.js"></script>
+<script src="../scripts/iconPicker.js"></script>
 <script>
     function openForm() {
         // Get the modal
@@ -179,12 +179,12 @@ refreshApps();
         }
         const download = require('download');
         const url = document.getElementById("icon-preview").src;
-        (async () => {
-            await download(url, root + '/media/usr/');
-        })();
+        download(url, root + '/media/usr/').then(() => {
+            console.log('File downloaded successfully!');
+        })
         apps.push(
             {
-                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + document.getElementById("icon").value
+                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + document.getElementById("icon").value, pinned: false
             });
         settings.set("apps", apps);
         refreshApps();

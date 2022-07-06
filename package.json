@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "electron": "^16.0.7"
+    "electron": "^19.0.6"
   },
   "name": "smartdisplaypi",
   "description": "An awesome smart display powered by Google Assistant and Raspberry Pi. ## NOTE This is still in development. Google Assistant is currently broken due to the libraries. A fix is on the way. For now, please use [GassistPi](https://github.com/shivasiddharth/GassistPi)",
@@ -44,7 +44,7 @@
     "global-agent": "^3.0.0",
     "global-tunnel-ng": "^2.7.1",
     "globalthis": "^1.0.2",
-    "got": "^9.6.0",
+    "got": "^12.1.0",
     "graceful-fs": "^4.2.9",
     "hotkeys-js": "^3.9.4",
     "http-cache-semantics": "^4.1.0",
@@ -85,6 +85,7 @@
     "semver": "^6.3.0",
     "semver-compare": "^1.0.0",
     "serialize-error": "^7.0.1",
+    "sortablejs": "^1.15.0",
     "sprintf-js": "^1.1.2",
     "string_decoder": "^1.1.1",
     "sumchecker": "^3.0.1",

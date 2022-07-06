@@ -2,7 +2,7 @@ function injectScript(webview) {
     webview.executeJavaScript(`
             if(typeof BETTERBOARDINJECTIONscript === 'undefined') {
     var BETTERBOARDINJECTIONscript = document.createElement('script');
-    BETTERBOARDINJECTIONscript.src = 'https://cdn.jsdelivr.net/npm/betterboard/dist/betterboard1.0.0-beta.09-aio.min.js';
+    BETTERBOARDINJECTIONscript.src = 'https://cdn.jsdelivr.net/npm/betterboard/dist/betterboard1.0.0-beta.10-aio.min.js';
     document.body.appendChild(BETTERBOARDINJECTIONscript);
     BETTERBOARDINJECTIONscript.onload = () => {
 BetterBoard.init({
@@ -51,7 +51,7 @@ BetterBoard.init({
     autoScroll: true,
     capsLockActive: false,
 });
-BetterBoard.run('input[type=text], input[type=number], input[type=password], input[type=search], textarea, input[type=email], input[type=month], input[type=time]'); 
+BetterBoard.run('yourmom'); 
 };
 }`);
     console.log("injected");

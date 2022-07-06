@@ -1,6 +1,11 @@
 @import url("assets/icons.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
 body {
   padding-bottom: calc(13vh + 5px);
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 .info {
   border: 2px solid #4aa3fc;
@@ -419,11 +424,25 @@ webview {
   padding: 10px;
   z-index: 9;
 }
+.app-list-app {
+  display: inline-block;
+  text-decoration: none;
+}
+.app-list-app div {
+  text-align: center;
+  color: white;
+}
 input.full-apps-search {
-  width: 75vw;
-  margin: auto;
-  display: block;
-  margin-bottom: 15px;
+  width: 75vw !important;
+  margin: auto !important;
+  display: block !important;
+  margin-bottom: 15px !important;
+  border-radius: 50px !important;
+  font-family: 'Roboto', sans-serif !important;
+  padding: 12px 20px !important;
+  border: 3px solid #d7dcdf !important;
+  height: 45px !important;
+  transition: 0.5s !important;
 }
 #shortcuts {
   position: fixed;
@@ -440,11 +459,11 @@ input.full-apps-search {
   margin-left: calc(12vh + 14px) !important;
 }
 #shortcuts a:not(a.usr), .full-apps a:not(a.usr) {
-  margin-left: 12px;
+  margin-left: 15px;
 }
 
 #shortcuts a.usr, .full-apps a.usr {
-  margin-left: 13px;
+  margin-left: 20px;
 }
 
 #shortcuts a:not(a.usr) img, .full-apps a:not(a.usr) img {
@@ -456,8 +475,7 @@ input.full-apps-search {
 }
 
 #shortcuts a.usr img, .full-apps a.usr img {
-  min-height: 90%;
-  max-height: 90%;
+  min-height: 11.5vh;
   transform: scale(1.233196);
   margin: 0;
 }

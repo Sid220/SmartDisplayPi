@@ -4,24 +4,29 @@ const root = require('electron-root-path').rootPath;
 const defaultApps = [{
     name: "Browser",
     icon: "/media/ie.png",
-    href: "/browser.html"
+    href: "/browser.html",
+    pinned: true
 }, {
     name: "YouTube",
     icon: "/media/youtube.png",
-    href: "/webview.html?url=https://www.youtube.com/"
+    href: "/webview.html?url=https://www.youtube.com/",
+    pinned: true
 },
 {
     name: "Ambient",
     icon: "/media/clock.png",
-    href: "/ambient.html"
+    href: "/ambient.html",
+    pinned: false
 }, {
     name: "OutLook",
     icon: "/media/outlook.png",
-    href: "/webview.html?url=https://outlook.live.com/"
+    href: "/webview.html?url=https://outlook.live.com/",
+    pinned: true
 }, {
     name: "Settings",
     icon: "/media/settings.png",
-    href: "/settings.html"
+    href: "/settings.html",
+    pinned: true
 }];
 
 const fullApps = {
@@ -31,6 +36,7 @@ const fullApps = {
     init: function() {
         this.appList = document.createElement("div");
         this.appList.style.display = "none";
+        this.appList.classList.add("animate__faster");
         document.body.appendChild(this.appList);
         this.appList.classList.add("full-apps");
         this.searchBar = document.createElement("input");
@@ -49,7 +55,8 @@ const fullApps = {
         settings.get("apps", defaultApps).forEach(app => {
             let shortcut = document.createElement("A");
             shortcut.href = root + app.href;
-            shortcut.innerHTML = `<img src="${root + app.icon}">`;
+            shortcut.draggable = false;
+            shortcut.innerHTML = `<img draggable="false" src="${root + app.icon}"><div>${app.name}</div>`;
             shortcut.dataset.smartdisplaypiName = app.name;
             if (app.icon.includes("/media/usr/")) {
                 shortcut.classList.add("usr");
@@ -63,10 +70,16 @@ const fullApps = {
     show: function() {
         this.appList.style.display = "block";
         this.shown = true;
+        this.appList.classList.remove("animate__slideOutDown");
+        this.appList.classList.add("animate__animated", "animate__slideInUp");
     },
     hide: function() {
-        this.appList.style.display = "none";
         this.shown = false;
+        this.appList.classList.remove("animate__slideInUp");
+        this.appList.classList.add("animate__animated", "animate__slideOutDown");
+        setTimeout(() => {
+            this.appList.style.display = "none";
+        }, 1000)
     }
 }
 const fuzzysort = require('fuzzysort');
@@ -83,7 +96,7 @@ function search(query) {
     fullApps.appList.childNodes.forEach((element) => {
         if (element !== fullApps.searchBar) {
             if (fullApps.resultArray.includes(element.dataset.smartdisplaypiName)) {
-                element.style.display = "inline";
+                element.style.display = "inline-block";
             } else {
                 element.style.display = "none";
             }
@@ -97,13 +110,16 @@ var shortcuts = document.createElement("DIV");
 shortcuts.id = "shortcuts";
 document.body.appendChild(shortcuts);
 settings.get("apps", defaultApps).forEach(app => {
+    if(app.pinned) {
         let shortcut = document.createElement("A");
         shortcut.href = root + app.href;
-        shortcut.innerHTML = `<img src="${root + app.icon}">`;
+        shortcut.draggable = false;
+        shortcut.innerHTML = `<img draggable="false" src="${root + app.icon}">`;
         if (app.icon.includes("/media/usr/")) {
             shortcut.classList.add("usr");
         }
         shortcuts.appendChild(shortcut);
+    }
 });
 // GOOGLE ASSISTANT
 if(settings.get("googleAssistant", false)) {
@@ -165,8 +181,9 @@ function googleAssistant(ele) {
 
 if(settings.get("googleAssistant", false)) {
     window.googleButton = document.createElement("A");
+    window.googleButton.draggable = false;
     window.googleButton.href = "#";
-    window.googleButton.innerHTML = `<img src="${root + '/assets/gassist/images/GoogleAssistantMicTransparent.png'}">`;
+    window.googleButton.innerHTML = `<img draggable="false" src="${root + '/assets/gassist/images/GoogleAssistantMicTransparent.png'}">`;
     window.googleButton.classList.add("google-assistant", "user");
     shortcuts.appendChild(window.googleButton);
     window.googleButton.onclick = () => {
@@ -191,13 +208,9 @@ homesquare = document.createElement("DIV");
 homesquare.id = "homesquare"
 document.body.appendChild(homebutton);
 homebutton.appendChild(homesquare);
-homebutton.onclick = () => {
-    closeopen();
-}
-homebutton.addEventListener("dblclick", () => {
-   window.location = root + "/index.html";
-})
-
+homebutton.addEventListener('click', () => {
+    window.location.href = root + "/index.html";
+}, false);
 if (settings.get("ambient", true) && !window.location.href.includes("ambient.html")) {
     function ambient() {
         window.location.href = root + "/ambient.html";
@@ -262,8 +275,9 @@ BetterBoard.init({
     autoScroll: true,
     capsLockActive: false,
 });
-BetterBoard.run('input[type=text], input[type=number], textarea');
-<!-- Matomo -->
+window.addEventListener("load", function() {
+    BetterBoard.run('yourmom');
+})
     var _paq = window._paq = window._paq || [];
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
     _paq.push(['trackPageView']);
@@ -275,4 +289,45 @@ BetterBoard.run('input[type=text], input[type=number], textarea');
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
 })();
-<!-- End Matomo Code -->
+// Hammer Time
+// Let's get it started
+// Let's get it started (up in here)
+// Let's get it started
+// Let's get it started (up in here)
+const Hammer = require(root + "/assets/hammer");
+
+var shortcutMc = new Hammer.Manager(shortcuts, {
+    recognizers: [
+        [Hammer.Swipe,{ direction: Hammer.DIRECTION_VERTICAL }],
+    ]
+});
+
+shortcutMc.on("swipeup swipedown", function(ev) {
+    if(!fullApps.initialized) {
+        fullApps.init();
+        var appListMc = new Hammer.Manager(fullApps.appList, {
+            recognizers: [
+                [Hammer.Swipe,{ direction: Hammer.DIRECTION_VERTICAL, threshold: 1, velocity: 0.1 }],
+            ]
+        });
+
+        appListMc.on("swipeup swipedown", function(ev) {
+            if(!fullApps.initialized) {
+                fullApps.init();
+            }
+            if(ev.type === "swipeup") {
+                fullApps.show();
+            }
+            if(ev.type === "swipedown"){
+                fullApps.hide();
+            }
+        });
+    }
+    if(ev.type === "swipeup") {
+        fullApps.show();
+    }
+    if(ev.type === "swipedown"){
+        fullApps.hide();
+    }
+});
+

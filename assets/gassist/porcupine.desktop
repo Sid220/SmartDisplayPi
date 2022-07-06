@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Porcupine
+Exec=bash -c 'cd ~/SmartDisplayPi/assets/gassist/ && bash start_porcupine.sh'
+Terminal=false
+Type=Application
