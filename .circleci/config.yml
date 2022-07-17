@@ -6,19 +6,11 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm"
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Install Dependencies
           command: "bash ./install.sh alpha"
-      - run:
-          name: Install dpkg and fakeroot
-          command: |
-            sudo apt-get update -y
-            sudo apt-get install -y dpkg
 
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
