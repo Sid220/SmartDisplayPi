@@ -12,40 +12,8 @@ $$    $$/ $$ | $$ | $$ |$$    $$ |$$ |        $$  $$/ $$    $$/ $$ |/     $$/ $$
                                                                               $$ |                    /  \__$$ |              
                                                                               $$ |                    $$    $$/               
                                                                               $$/                      $$$$$$/                "
-if [ $USER = "root" ]; then
-    echo "You are root. Please run this script as a normal user with sudo powers."
-    exit 1
-fi
-release=$(lsb_release -ds)
-if [ "$release" != 'Ubuntu 21.10' ]; then
-    echo "This script is only intended for fresh installations of Ubuntu 21.10, you are running $release"
-    echo -n "Would you like to continue anyway? (y/N): "
-    read continue0
-    if [ "$continue0" = "y" ]; then
-        echo "Continuing anyway..."
-    else
-        exit 1
-    fi
-fi
-echo "Please note: This script is only intended for fresh installations of Ubuntu 21.10 on Raspberry Pis and will make breaking changes to your computer."
-echo -n "Would you like to continue? (y/N): "
-read continue1
-if [ "$continue1" = "y" ]; then
-    echo "Continuing..."
-else
-    exit 1
-fi
-if [ -z "$1" ]; then
-  BRANCH="master"
-else
-  if [ "$1" == "alpha" ]; then
-    BRANCH="alpha-branch"
-  elif [ "$1" == "beta" ]; then
-    BRANCH="beta-branch"
-  else
-    BRANCH="master"
-fi
-fi
+
+BRANCH="alpha-branch"
 sudo apt update && sudo apt upgrade -y
 if [ $? != 0 ]; then
     echo "There was an error updating. Look above for more info."
