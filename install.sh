@@ -101,4 +101,3 @@ sudo setcap CAP_SYS_BOOT=+ep /usr/bin/node
 RAWSLIMCONF=$(<assets/slim_CURSOR.conf)
 echo "${RAWSLIMCONF/\[SMARTDISPLAYPI_USER_HERE_YOUR_MOM\]/"$USER"}" | sudo tee /etc/slim.conf > /dev/null
 echo "Rebooting..."
-sudo reboot
