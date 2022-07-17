@@ -84,13 +84,6 @@ fi
 mkdir ~/.config/autostart
 if ! bash ./updates.sh; then
     echo "There was an error installing other packages. Look above for more info."
-    echo -n "Would you like to continue anyway? (y/N): "
-    read continue8
-    if [ "$continue8" = "y" ]; then
-        echo "Continuing anyway..."
-    else
-        exit 1
-    fi
 fi
 echo "[Desktop Entry]
 Name=SmartDisplayPi
