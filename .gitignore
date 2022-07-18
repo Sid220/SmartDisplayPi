@@ -1,1 +1,3 @@
 /node_modules/*
+/media/usr/*
+!/media/usr/.gitkeep
