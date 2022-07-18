@@ -1,11 +1,51 @@
-@import url("assets/icons.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
+@import url("assets/pupertino/newfull.css");
 body {
   padding-bottom: calc(13vh + 5px);
+}
+.material-icons-round {
+  position: relative;
+  top: 3px;
 }
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  font-family: Inter,sans-serif;
+}
+body {
+  --bg-docs: #212121;
+  --color-docs: #e6e6e6;
+  --route-bg: #040404;
+  --white-or-black: #212121;
+  --p-btn-border: #454545;
+  --p-btn-def-bg: #262525;
+  --p-btn-def-col: #fcfcfc;
+  --p-btn-dir-col: #e0e0e0;
+  --p-btn-scope-unactive: #e4e4e4;
+  --p-btn-scope-action: #d0d0d0;
+  --p-color-card: #fff;
+  --p-bg-card: #1a1a1a;
+  --p-bd-card: #1d1d1d;
+  --p-suggested-bg: #0e0e0e;
+  --p-suggested-color: #e6e6e6;
+  --route-bg: #040404;
+  --p-modal-bg: rgb(45 45 45 / 85%);
+  --p-modal-bd-color: rgb(224 224 224 / 10%);
+  --p-color-basic-elements: #f5f5f7;
+  --primary-col-ac: #197fff;
+  --p-input-bg: #212121;
+  --p-input-color: #fff;
+  --p-input-color-plac: #414141;
+  --p-input-bd: #454545;
+  --p-modal-fallback-color: rgba(0,0,0,.95);
+  --p-segmented-bg: #0e0e0e;
+  --p-actions-static-color: #dadada;
+  --p-modal-color: #f5f5f7;
+  --p-mobile-tabs-color: #f5f5f7;
+  --p-panel-bg: #212121;
+  background: var(--bg-docs);
+  color: var(--color-docs);
 }
 .info {
   border: 2px solid #4aa3fc;
@@ -13,147 +53,7 @@ html, body {
   padding: 10px;
     border-radius: 5px;
 }
-input[type=range] {
-  -webkit-appearance: none;
-  height: 10px;
-  border-radius: 5px;
-  background: #d7dcdf;
-  outline: none;
-  padding: 0;
-  margin: 5px;
-  flex-grow: 100;
-}
 
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #2c3e50;
-  cursor: pointer;
-  -webkit-transition: background 0.15s ease-in-out;
-  transition: background 0.15s ease-in-out;
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-  background: #1abc9c;
-}
-
-input[type=range]:active::-webkit-slider-thumb {
-  background: #1abc9c;
-}
-
-input[type=range]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: 0;
-  border-radius: 50%;
-  background: #2c3e50;
-  cursor: pointer;
-  -moz-transition: background 0.15s ease-in-out;
-  transition: background 0.15s ease-in-out;
-}
-
-input[type=range]::-moz-range-thumb:hover {
-  background: #1abc9c;
-}
-
-input[type=range]:active::-moz-range-thumb {
-  background: #1abc9c;
-}
-
-input[type=range]:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #1abc9c;
-}
-.range-slider__container {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 8px;
-  display: flex;
-}
-
-::-moz-range-track {
-  background: #d7dcdf;
-  border: 0;
-}
-
-input::-moz-focus-inner,
-input::-moz-focus-outer {
-  border: 0;
-}
-button:disabled, button.green:disabled {
-  border-color: #d7dcdf !important;
-  color: #d7dcdf !important;
-}
-input[type=submit], input[type=button], input[type=text], input[type=number], select, button:not(button#backbtn, button#fave, button#refresh,  button#home, button#forward) {
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 3px solid #d7dcdf;
-  background-color: white;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  outline: none;
-  border-radius: 5px;
-}
-input[type=submit].green, input[type=button].green, select.green {
-border-color: #1abc9c;
-color: #1abc9c;
-}
-button.green {
-  border-color: #1abc9c !important;
-  color: #1abc9c;
-}
-
-input[type=text]:not(input[type=text]#url):focus,
-input[type=submit]:hover,
-input[type=number]:focus,
-input[type=button]:hover,
-select:focus, button:not(button#backbtn, button#fave, button#refresh,  button#home, button#forward):hover {
-  border: 3px solid #2c3e50 !important;
-  color: #2c3e50;
-}
-
-option {
-  background-color: #d7dcdf;
-}
-
-option:hover {
-  background-color: #2c3e50;
-}
-
-input[type=checkbox] {
-  appearance: none;
-  margin: 0;
-  font: inherit;
-  color: #2c3e50;
-  width: 1.15em;
-  height: 1.15em;
-  border: 0.15em solid currentColor;
-  border-radius: 0.15em;
-  display: grid;
-  place-content: center;
-}
-
-input[type=checkbox]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-  transform: scale(0);
-  transform-origin: bottom left;
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--form-control-color);
-  background-color: #1abc9c;
-}
-
-input[type=checkbox]:checked::before {
-  transform: scale(1);
-}
-
-input[type=checkbox]:checked {
-  color: #1abc9c;
-}
 iframe.google-assistant-output {
   margin: 0;
   z-index: 129492384923748923748;
@@ -169,73 +69,17 @@ iframe.google-assistant-output {
   padding: 8px;
   display: flex;
 }
-.switchtext {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  width: 60px;
-  height: 34px;
+.switchoption label.p-form-switch {
   flex-shrink: 0;
   flex-grow: 0;
   margin-left: auto;
   order: 2;
 }
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.switchtext {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #d7dcdf;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked+.slider {
-  background-color: #1abc9c;
-}
-
-input:focus+.slider {
-  box-shadow: 0 0 1px #1abc9c;
-}
-
-input:checked+.slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-
-* {
-  font-family: 'Roboto', sans-serif;
-}
 
 #background {
   position: fixed;
@@ -311,7 +155,7 @@ webview {
 
 
 .widget {
-  background: #d7dcdf;
+  background: rgba(100, 100, 100, 0.3);
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   margin-bottom: 3.3333%;
@@ -321,6 +165,7 @@ webview {
 .widget h3 {
   margin-left: 10%;
   margin-right: 10%;
+  color: white;
 }
 
 .widget webview {
@@ -398,11 +243,12 @@ webview {
   left: 0.75%;
   bottom: 0.75%;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.25);
   margin: 0;
-  z-index: 300;
+  z-index: 11;
   width: 12vh;
   height: 12vh;
+  background: rgba(100, 100, 100, 0.3);
+  padding: 1.01vh;
 }
 
 #homesquare {
@@ -415,13 +261,14 @@ webview {
   margin: 25%;
 }
 .full-apps {
-  background: #222222;
+  background: rgba(100, 100, 100, 0.3);
   width: calc(100vw - 20px);
   position: absolute;
-  height: calc(100vh - 13vh - 0.75vh);
+  height: 100%;
   top: 0;
   left: 0;
   padding: 10px;
+  backdrop-filter: blur(1.4rem);
   z-index: 9;
 }
 .app-list-app {
@@ -433,30 +280,41 @@ webview {
   color: white;
 }
 input.full-apps-search {
-  width: 75vw !important;
-  margin: auto !important;
-  display: block !important;
-  margin-bottom: 15px !important;
-  border-radius: 50px !important;
-  font-family: 'Roboto', sans-serif !important;
-  padding: 12px 20px !important;
-  border: 3px solid #d7dcdf !important;
-  height: 45px !important;
-  transition: 0.5s !important;
+  width: 75vw;
+  margin: auto;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 50px;
+  font-family: 'Roboto', sans-serif;
+  padding: 12px 20px;
+  transition: 0.5s;
+  background: none;
+  font-size: 20px;
+}
+input.full-apps-search:focus {
+  border-color: #808080;
+}
+input.full-apps-search::placeholder {
+  color: #808080;
+}
+.shortcuts-wrapper {
+  position: fixed;
+  bottom: 5px;
+  width: 100%;
+  z-index: 11;
 }
 #shortcuts {
-  position: fixed;
-  width: 100%;
+  width: fit-content;
   height: 13vh;
-  left: 0;
-  bottom: 0;
   padding-top: 0.75%;
-  background: #222222;
+  background: rgba(100, 100, 100, 0.3);
+  padding-right: calc(5vh + 14px) !important;
   white-space: nowrap;
-  z-index: 10;
+  border-radius: 65px;
+  margin: 0 auto;
 }
 #shortcuts a:first-child {
-  margin-left: calc(12vh + 14px) !important;
+  margin-left: calc(5vh + 14px) !important;
 }
 #shortcuts a:not(a.usr), .full-apps a:not(a.usr) {
   margin-left: 15px;

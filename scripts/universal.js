@@ -32,6 +32,7 @@ const defaultApps = [{
 const fullApps = {
     initialized: false,
     shown: false,
+    animating: false,
     apps: [],
     init: function() {
         this.appList = document.createElement("div");
@@ -41,8 +42,8 @@ const fullApps = {
         this.appList.classList.add("full-apps");
         this.searchBar = document.createElement("input");
         this.searchBar.type = "text";
-        this.searchBar.placeholder = "Search Apps";
-        this.searchBar.classList.add("full-apps-search");
+        this.searchBar.placeholder = "Search Apps...";
+        this.searchBar.classList.add("full-apps-search", "p-form-text", "p-form-no-validate");
         this.searchBar.oninput = () => {
             search(this.searchBar.value);
         }
@@ -68,18 +69,28 @@ const fullApps = {
         this.initialized = true;
     },
     show: function() {
-        this.appList.style.display = "block";
-        this.shown = true;
-        this.appList.classList.remove("animate__slideOutDown");
-        this.appList.classList.add("animate__animated", "animate__slideInUp");
+        if(!this.animating) {
+            this.animating = true;
+            this.appList.style.display = "block";
+            this.shown = true;
+            this.appList.classList.remove("animate__slideOutDown");
+            this.appList.classList.add("animate__animated", "animate__slideInUp");
+            setTimeout(() => {
+                this.animating = false;
+            }, 500)
+        }
     },
     hide: function() {
-        this.shown = false;
-        this.appList.classList.remove("animate__slideInUp");
-        this.appList.classList.add("animate__animated", "animate__slideOutDown");
-        setTimeout(() => {
-            this.appList.style.display = "none";
-        }, 1000)
+        if(!this.animating) {
+            this.shown = false;
+            this.animating = true;
+            this.appList.classList.remove("animate__slideInUp");
+            this.appList.classList.add("animate__animated", "animate__slideOutDown");
+            setTimeout(() => {
+                this.appList.style.display = "none";
+                this.animating = false;
+            }, 500)
+        }
     }
 }
 const fuzzysort = require('fuzzysort');
@@ -108,7 +119,25 @@ function search(query) {
 }
 var shortcuts = document.createElement("DIV");
 shortcuts.id = "shortcuts";
-document.body.appendChild(shortcuts);
+let shortcutsWrapper = document.createElement("DIV");
+shortcutsWrapper.classList.add("shortcuts-wrapper");
+document.body.appendChild(shortcutsWrapper);
+shortcutsWrapper.appendChild(shortcuts);
+let shortcut = document.createElement("A");
+shortcut.onclick = () => {
+    if(!fullApps.initialized) {
+        fullApps.init();
+    }
+    if(!fullApps.shown) {
+        fullApps.show();
+    }
+    else {
+        fullApps.hide();
+    }
+}
+shortcut.draggable = false;
+shortcut.innerHTML = `<img draggable="false" src="${root}/media/apps.png">`;
+shortcuts.appendChild(shortcut);
 settings.get("apps", defaultApps).forEach(app => {
     if(app.pinned) {
         let shortcut = document.createElement("A");

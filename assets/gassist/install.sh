@@ -111,13 +111,14 @@ cp pushtotalk.py env/lib/python3.9/site-packages/googlesamples/assistant/grpc/pu
 echo "[DEV]: Script to run on startup: complete."
 
 sudo apt install pavucontrol -y
-python3 -m pip install pvporcupine pvporcupinedemo pv_recorder
+python3 -m pip install pvporcupine pvporcupinedemo pvrecorder
 RAWPORCUPINESCRIPT=$(<start_porcupine.sh)
 echo "${RAWPORCUPINESCRIPT//\[SMARTDISPLAYPI_PORCUPINE_ACCESS_KEY\]/"$PORCUPINEACCESSKEY"}" | sudo tee ./start_porcupine.sh > /dev/null
+cp ./porcupine.desktop ~/.config/autostart/
 echo "[DEV]: Finished setting up Porcupine"
 
 echo "Complete!"
-echo "You can now talk to your Google Assistant by saying \"Alexa\". Kinda counter-intuitive, but it works."
+echo "You can now talk to your Google Assistant by saying \"Hey Google\"."
 echo "Rebooting in..."
 for i in {5..1}
 do

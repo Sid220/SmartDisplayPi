@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href='../style.css' rel='stylesheet' />
     <title>Settings</title>
 
@@ -24,19 +23,17 @@
             /* Full height */
             overflow: auto;
             /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
+            background: rgba(100, 100, 100, 0.3);
+            backdrop-filter: blur(1.4rem);
         }
 
         /* Modal Content/Box */
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--bg-docs);
             margin: 15% auto;
             /* 15% from the top and centered */
             padding: 20px;
-            border: 1px solid #888;
+            border: 1px solid var(--p-input-bd);
             width: 80%;
             /* Could be more or less, depending on screen size */
         }
@@ -67,26 +64,26 @@
     <div class="modal-content">
         <span class="close">&times;</span><br>
         <form action="#" onsubmit="createWidget();">
-            Name: <input data-kioskboard-type="keyboard" required id="name2" type="text"><br>
-            URL: <select id="protocol">
+            Name: <input data-kioskboard-type="keyboard" class="p-form-text p-form-no-validate" required id="name2" type="text"><br>
+            URL: <div class="p-form-select"><select id="protocol">
             <option value="http://">http</option>
             <option value="https://">https</option>
             <option value="http://">IDK</option>
-        </select> :// <input data-kioskboard-specialcharacters="true" id="url" required type="text"><br>
-            <input type="submit" value="Done">
+        </select></div> :// <input class="p-form-text p-form-no-validate" data-kioskboard-specialcharacters="true" id="url" required type="text"><br>
+            <input class="p-btn p-prim-col" type="submit" value="Done">
 
         </form>
 
     </div>
 
 </div>
-<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><i class="icon icon_bold icon_go-previous"></i> Settings</span></div>
+<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div>
 <br><br>
 <h1>
     Background
 </h1>
 <label for="background_delay">Change background image every: </label>
-<input required min="5" max="10000000" type="number" oninput="if(this.value !== '') { settings.set('background_refresh_rate', this.value * 1000) }" id="background_delay">
+<input class="p-form-text p-form-no-validate" required min="5" max="10000000" type="number" oninput="if(this.value !== '') { settings.set('background_refresh_rate', this.value * 1000) }" id="background_delay">
 <label for="background_delay">seconds.</label>
 <h1>
     Widgets
@@ -97,18 +94,17 @@
 <a href="#" onclick="settings.set(`editingHome`, true); window.location = '../index.html'">Edit widget
     locations</a><br><br>
 <div class="range-slider__container">
-    Widget width: 30px <input id="width" class="range-slider__range" oninput="changeSize()" type="range" min="30" max="500"> 500px
+    Widget width: 30px <input id="width"  class="p-form-range" oninput="changeSize()" type="range" min="30" max="500"> 500px
 </div><br>
 <div class="range-slider__container">
-    Widget height: 30px <input id="height" oninput="changeSize()" type="range" min="30" max="500"> 500px
+    Widget height: 30px <input id="height" class="p-form-range" oninput="changeSize()" type="range" min="30" max="500"> 500px
 </div>
 <div class="widget" id="example"><h3>Widgets look like this</h3></div>
-<div class="switchoption">
-    <label for="autoload" class="switchtext">Autoload widgets (unrecomended)</label>
-    <label class="switch">
-        <input type="checkbox"
-               oninput="settings.set('autoloadWidgets', this.checked)" id="autoload">
-        <span class="slider"></span>
+<div onclick="document.getElementById('autoload').click();" class="switchoption">
+    <label class="switchtext">Autoload all widgets (unrecomended)</label>
+    <label class="p-form-switch">
+        <input type="checkbox" oninput="settings.set('autoloadWidgets', this.checked)" id="autoload">
+        <span></span>
     </label>
 </div>
 <script src="../scripts/universal.js"></script>
@@ -160,10 +156,14 @@
             url: "https://calendar.google.com/calendar/u/0/r/customday"
         }]);
     function refreshWidgets() {
-        document.getElementById("ul").innerHTML = `<li onclick="openForm()"><i class="icon icon_window-new"></i> New</li>`;
+        document.getElementById("ul").innerHTML = `<li onclick="openForm()"><span class="material-icons-round">
+add
+</span>New</li>`;
         widgets.forEach(widget => {
             var li = document.createElement("li");
-            li.innerHTML = widget.name + ` <a onclick="deleteWidget('` + widget.name + `')"><i class="icon icon_edit-delete"></i></a>`
+            li.innerHTML = widget.name + ` <a onclick="deleteWidget('` + widget.name + `')"><span class="material-icons-round">
+delete
+</span></a>`
             document.getElementById("ul").appendChild(li);
         });
     }

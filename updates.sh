@@ -7,6 +7,6 @@ if ! test -f "$FILE"; then
      Name=LXPolKit
      Exec=/bin/lxpolkit
      Terminal=false
-     Type=Application" | sudo tee ~/.config/autostart/lxpolkit.desktop
+     Type=Application" | tee ~/.config/autostart/lxpolkit.desktop
 fi
-
+sudo apt install icnsutils

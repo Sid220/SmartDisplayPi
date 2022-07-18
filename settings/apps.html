@@ -24,19 +24,17 @@
             /* Full height */
             overflow: auto;
             /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
+            background: rgba(100, 100, 100, 0.3);
+            backdrop-filter: blur(1.4rem);
         }
 
         /* Modal Content/Box */
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--bg-docs);
             margin: 15% auto;
             /* 15% from the top and centered */
             padding: 20px;
-            border: 1px solid #888;
+            border: 1px solid var(--p-input-bd);
             width: 80%;
             /* Could be more or less, depending on screen size */
         }
@@ -56,8 +54,8 @@
             cursor: pointer;
         }
         #icons img {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
         }
     </style>
     <script src="../scripts/offline.js"></script>
@@ -72,15 +70,15 @@
     <div class="modal-content">
         <span class="close">&times;</span><br>
         <form action="#" onsubmit="createApp();">
-            <label for="name2">Name: </label><input data-kioskboard-type="keyboard" required id="name2" type="text"><br>
-            <label for="protocol">URL: </label><select id="protocol">
+            <label for="name2">Name: </label><input class="p-form-text p-form-no-validate" data-kioskboard-type="keyboard" required id="name2" type="text"><br>
+            <label for="protocol">URL: </label><div class="p-form-select"><select id="protocol">
             <option value="http://">http</option>
             <option value="https://">https</option>
             <option value="http://">IDK</option>
-        </select> :// <input data-kioskboard-specialcharacters="true" id="url" required type="text"><br>
+        </select></div> :// <input data-kioskboard-specialcharacters="true" class="p-form-text p-form-no-validate" id="url" required type="text"><br>
             <input type="hidden" id="icon" value="internet-web-browser.svg">
-            Icon: <button type="button" onclick="openIconForm()"><img id="icon-preview" style="height: 100px; width: 100px" src="https://cdn.jsdelivr.net/gh/Sid220/smartdisplaypi-backend/kde-icons/icons/internet-web-browser.svg"></button><br>
-            <input type="submit" value="Done">
+            Icon: <button type="button" class="p-btn" onclick="openIconForm()"><img id="icon-preview" style="height: 100px; width: 100px" src="https://cdn.jsdelivr.net/gh/Sid220/smartdisplaypi-backend/kde-icons/icons/internet-web-browser.svg"></button><br>
+            <input class="p-btn p-prim-col" type="submit" value="Done">
         </form>
 
     </div>
@@ -97,7 +95,7 @@
     </div>
 
 </div>
-<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><i class="icon icon_bold icon_go-previous"></i> Settings</span></div>
+<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div>
 <br><br><br>
 <div id="warn" class="info" style="display: none"><i class="icon icon_circular-arrow-shape"></i> Some changes require a <a href="javascript:window.location.reload()">reload</a></div>
 <h1>
@@ -152,11 +150,15 @@
     }
     var apps = settings.get("apps", defaultApps);
     function refreshApps() {
-        document.getElementById("ul").innerHTML = `<li onclick="openForm()"><i class="icon icon_window-new"></i> New</li>`;
+        document.getElementById("ul").innerHTML = `<li onclick="openForm()"><span class="material-icons-round">
+add
+</span> New</li>`;
         apps.forEach(app => {
             var li = document.createElement("li");
             if(app.name !== "Browser" && app.name !== "Settings" && app.name !== "Ambient") {
-                li.innerHTML = app.name + ` <a onclick="deleteApp('` + app.name + `')"><i class="icon icon_edit-delete"></i></a>`;
+                li.innerHTML = app.name + ` <a onclick="deleteApp('` + app.name + `')"><span class="material-icons-round">
+delete
+</span></a>`;
                 document.getElementById("ul").appendChild(li);
             }
             else {
@@ -178,13 +180,28 @@ refreshApps();
             return;
         }
         const download = require('download');
-        const url = document.getElementById("icon-preview").src;
+        const url = document.getElementById("icon").value;
+        const filename = url.substr(url.lastIndexOf("/")+1);
+        console.log(filename)
         download(url, root + '/media/usr/').then(() => {
             console.log('File downloaded successfully!');
         })
+        const { exec } = require("child_process");
+
+        exec("cd " + root + " && icns2png -x ./media/usr/" + filename, (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+        });
         apps.push(
             {
-                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + document.getElementById("icon").value, pinned: false
+                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + filename + "_256x256x32.png", pinned: false
             });
         settings.set("apps", apps);
         refreshApps();

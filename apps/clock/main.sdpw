@@ -1,0 +1,17 @@
+name: Clock
+description: A clock for SmartDisplayPi with date
+version: 1
+icon: clock.png
+developer: The Fake Slim Shady
+license: MIT
+homepage: null
+git: null
+
+dimensions:
+  width: 200px
+  height: 200px
+
+app:
+  # Types: "LOCAL_HTML", "WEBSITE", "INJECTED_HTML"
+  type: INJECTED_HTML
+  source: clock.htmp
