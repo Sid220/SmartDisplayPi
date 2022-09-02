@@ -8,35 +8,41 @@ const settings = new Store();
 const root = require('electron-root-path').rootPath.replaceAll("\\", "/");
 const defaultApps = [{
     name: "Browser",
-    icon: "/media/ie.png",
-    href: "/browser.html",
-    pinned: true
+    icon: "/apps/apps/Browser/ie.png",
+    href: "/apps/apps/Browser/app/browser.html",
+    pinned: true,
+    user: true,
 }, {
     name: "YouTube",
-    icon: "/media/youtube.png",
-    href: "/webview.html?url=https://www.youtube.com/",
-    pinned: true
+    icon: "/apps/apps/YouTube/youtube.png",
+    href: "/src/webview.html?url=https://www.youtube.com/",
+    pinned: true,
+    user: true,
 },
 {
     name: "Ambient",
     icon: "/media/clock.png",
-    href: "/ambient.html",
-    pinned: false
+    href: "/src/ambient.html",
+    pinned: false,
+    user: false,
 }, {
     name: "OutLook",
-    icon: "/media/outlook.png",
-    href: "/webview.html?url=https://outlook.live.com/",
-    pinned: true
+    icon: "/apps/apps/OutLook/outlook.png",
+    href: "/src/webview.html?url=https://outlook.live.com/",
+    pinned: true,
+    user: true,
 }, {
     name: "Settings",
     icon: "/media/settings.png",
-    href: "/settings.html",
-    pinned: true
+    href: "/src/settings.html",
+    pinned: true,
+    user: false,
 }, {
     name: "App Store",
     icon: "/media/app-store.png",
-    href: "/app-store.html",
-    pinned: true
+    href: "/src/app-store.html",
+    pinned: true,
+    user: false,
 }];
 
 const fullApps = {
@@ -67,7 +73,12 @@ const fullApps = {
             let shortcut = document.createElement("A");
             shortcut.href = root + app.href;
             shortcut.draggable = false;
-            shortcut.innerHTML = `<img draggable="false" src="${root + app.icon}"><div>${app.name}</div>`;
+            let icon = document.createElement("IMG");
+            icon.src = root + app.icon;
+            shortcut.appendChild(icon);
+            let shortcutName = document.createElement("DIV");
+            shortcutName.innerHTML = app.name;
+            shortcut.appendChild(shortcutName);
             shortcut.dataset.smartdisplaypiName = app.name;
             shortcut.classList.add('app-list-app');
             this.appList.appendChild(shortcut);
@@ -271,7 +282,7 @@ function closeopen() {
 
 if (settings.get("ambient", true) && !window.location.href.includes("ambient.html")) {
     function ambient() {
-        window.location.href = root + "/ambient.html";
+        window.location.href = root + "/src/ambient.html";
     }
     t = setTimeout(ambient, 10000);
     window.addEventListener('load', resetTimer, true);
