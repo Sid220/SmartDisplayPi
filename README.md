@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
 [![Documentation](https://img.shields.io/badge/docs-published-success)](https://docs.sdp.vestal.tk/user/installation)
 [![Uptime](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Sid220/server-status/master/api/smart-display-pi-backend/uptime.json)](https://status.vestal.tk/history/smart-display-pi-backend)
 [![Uptime](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Sid220/server-status/master/api/smart-display-pi-backend/response-time.json)](https://status.vestal.tk/history/smart-display-pi-backend)
-![CircleCI](https://img.shields.io/circleci/build/github/Sid220/SmartDisplayPi/alpha-branch)
+[![CircleCI](https://img.shields.io/circleci/build/github/Sid220/SmartDisplayPi/alpha-branch)](https://circleci.com/gh/Sid220/SmartDisplayPi/?branch=alpha-branch)
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/Sid220/SmartDisplayPi)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Sid220/SmartDisplayPi)
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Sid220/SmartDisplayPi?include_prereleases)
