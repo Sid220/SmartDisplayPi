@@ -15,3 +15,4 @@ if ! test -f "$FILE"; then
      Type=Application" | tee ~/.config/autostart/lxpolkit.desktop
 fi
 sudo apt install icnsutils
+sudo apt-get install subversion
