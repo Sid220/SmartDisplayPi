@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -17,39 +23,50 @@
 </head>
 
 <body>
+  <!-- Button for Gnome Control Centre Alert -->
+  <a href="#" class="p-btn" style="display: none" id="gnome-control-centre-alert-button" data-p-open-modal="#gnome-control-centre-alert"></a>
+  <div class="p-modal-background">
+    <div class="p-modal" id="gnome-control-centre-alert">
+      <h2>Warning!</h2>
+      <p>Do not click minimize after this window is opened, the window will disappear until reboot and will slow down your smartdisplay until then.</p>
+      <div onclick='settings.set("firstTimeOpeningExternalApp", false);
+          gnomeControlCentre();' class="p-modal-button-container">
+        <a href="#" data-p-cancel>OK</a>
+      </div>
+    </div>
+  </div>
   <a href="#" id="exitdev">Exit [DEV MODE]</a>
-  <div class="setting-menu" onclick="gnomeControlCentre()">
+  <div class="setting-menu p-card" onclick="gnomeControlCentre()">
     <img src="media/gnome-control-center.png">
     <br>
     <h1>Gnome Control Centre</h1>
     <p>Configure the network or advanced settings like VPNs with Gnome Control Centre</p>
   </div>
-  <div class="setting-menu" onclick="window.location = 'settings/home.html'">
+  <div class="setting-menu p-card" onclick="window.location = 'settings/home.html'">
     <img src="media/home.png">
     <br>
     <h1>Home Page</h1>
     <p>Edit settings pertaining to the home page</p>
   </div>
-  <div class="setting-menu" onclick="window.location = 'settings/apps.html'">
+  <div class="setting-menu p-card" onclick="window.location = 'settings/apps.html'">
     <img src="media/apps.png">
     <br>
     <h1>Applications</h1>
     <p>Edit, add, or delete apps!</p>
   </div>
-  <div class="setting-menu" onclick="window.location = 'settings/misc.html'">
+  <div class="setting-menu p-card" onclick="window.location = 'settings/misc.html'">
     <img src="media/settings.png">
     <br>
     <h1>Misc.</h1>
     <p>Edit other settings</p>
   </div>
-  <hr>
-  <div class="setting-menu" onclick="window.location = 'settings/about.html'">
+  <div class="setting-menu p-card" onclick="window.location = 'settings/about.html'">
     <img src="media/about.png">
     <br>
     <h1>About</h1>
     <p>About this instance of SmartDisplayPi</p>
   </div>
-  <div class="setting-menu" onclick="window.location = 'Setup/setup1.html'">
+  <div class="setting-menu p-card" onclick="window.location = 'Setup/setup1.html'">
     <img src="media/setup.png">
     <br>
     <h1>Setup Wizard</h1>
@@ -73,9 +90,7 @@
     }
     function gnomeControlCentre() {
       if (settings.get("firstTimeOpeningExternalApp", true)) {
-        alert("Do not click minimize after this window is opened, it will disappear until reboot and will slow down your smartdisplay until then.");
-        settings.set("firstTimeOpeningExternalApp", false);
-        gnomeControlCentre();
+        document.getElementById("gnome-control-centre-alert-button").click();
         return;
       }
       var exec = require('child_process').exec;
@@ -83,6 +98,7 @@
     }
 
   </script>
+  <script src="assets/pupertino/modals.js"></script>
 
 </body>
 

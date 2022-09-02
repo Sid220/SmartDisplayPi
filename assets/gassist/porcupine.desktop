@@ -1,5 +1,3 @@
-[Desktop Entry]
-Name=Porcupine
-Exec=bash -c 'cd ~/SmartDisplayPi/assets/gassist/ && bash start_porcupine.sh'
-Terminal=false
-Type=Application
+Copyright (C) 2022 The Fake Slim Shady
+
+    SPDX-License-Identifier: MIT

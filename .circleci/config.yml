@@ -1,0 +1,25 @@
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: "bash ./install.sh alpha CIRCLECI"
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+      - store_artifacts:
+          path: ~/repo/out/make

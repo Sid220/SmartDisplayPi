@@ -1,22 +1,6 @@
-// let icons = JSON.parse(fs.readFileSync('assets/icons.json'));
-// function search(query) {
-//     let results = fuzzysort.go(query, icons, {
-//         limit: 50,
-//         all: true
-//     });
-//     document.getElementById("icons").innerHTML = "";
-//     results.forEach(result => {
-//         let img = document.createElement("img");
-//         img.src = "https://cdn.jsdelivr.net/gh/Sid220/smartdisplaypi-backend/kde-icons/icons/" + result.target;
-//         document.getElementById("icons").appendChild(img);
-//         img.onclick = function () {
-//             document.getElementById("icon").value = result.target;
-//             document.getElementById("icon-preview").src = img.src;
-//             document.getElementById("iconModal").style.display = "none";
-//         }
-//     })
-// }
-// search("");
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
 
 async function search(query) {
     await fetch("https://p1txh7zfb3-3.algolianet.com/1/indexes/macOSicons/query?x-algolia-agent=Algolia%20for%20JavaScript%20(4.13.1)%3B%20Browser", {
@@ -54,4 +38,4 @@ async function search(query) {
         })
     });
 }
-search("discord");
+search("");

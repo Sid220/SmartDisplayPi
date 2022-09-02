@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +16,7 @@
 </head>
 
 <body style="margin: 0;">
-    <webview src="about:blank" style="height: calc(100vh - 13vh - 0.70vh);"
+    <webview src="about:blank" style="height: calc(100vh - 13vh - 2.5vh);"
         useragent="Mozilla/5.0 (Linux; Android 12; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36 SmartDisplayPi">
     </webview>
     <script src="scripts/universal.js"></script>
@@ -37,7 +43,7 @@
         webview.addEventListener('did-fail-load', (error) => {
             console.log(error.errorCode);
             if (error.isMainFrame) {
-                webview.loadURL('file:///' + root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+                webview.loadURL(root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
             }
         });
     </script>

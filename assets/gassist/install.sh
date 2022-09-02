@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 cd ~/SmartDisplayPi/assets/gassist || exit 1
 sudo apt install alsa-utils -y
 arecord -l

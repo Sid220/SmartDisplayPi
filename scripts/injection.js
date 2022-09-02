@@ -1,3 +1,7 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
 function injectScript(webview) {
     webview.executeJavaScript(`
             if(typeof BETTERBOARDINJECTIONscript === 'undefined') {

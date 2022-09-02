@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -13,7 +19,7 @@
         input[type=email],
         input[type=number],
         input[type=password],
-        input[type=text] {
+        input[type=text]:not(.full-apps-search) {
             height: 23px;
             transition: none;
             border-width: 1px;
@@ -23,7 +29,7 @@
         input[type=email],
         input[type=number],
         input[type=password],
-        input[type=text],
+        input[type=text]:not(.full-apps-search),
         textarea {
             font: 9pt Segoe UI, sans-serif;
             padding: 3px 4px 5px;
@@ -36,7 +42,7 @@
         input[type=email]:focus,
         input[type=number]:focus,
         input[type=password]:focus,
-        input[type=text]:focus,
+        input[type=text]:focus:not(.full-apps-search),
         textarea:focus {
             outline: none;
             border-color: #86c6e8 #b3e0f9 #b3e0f9;
@@ -180,7 +186,7 @@
             left: 0;
             width: 100%;
             /*     entire page - nav  - menu - ~menu padding */
-            height: calc(100vh - 60px - 13vh - 0.70vh);
+            height: calc(100vh - 60px - 13vh - 2.5vh);
             z-index: -1;
             margin-top: 60px;
         }

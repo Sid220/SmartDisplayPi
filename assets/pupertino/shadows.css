@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2022 The Fake Slim Shady
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 .p-shadow-1 {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }

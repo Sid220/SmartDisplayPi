@@ -1,6 +1,11 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
+import("../assets/pupertino/actions.mjs");
 const Store = require('electron-store');
 const settings = new Store();
-const root = require('electron-root-path').rootPath;
+const root = require('electron-root-path').rootPath.replaceAll("\\", "/");
 const defaultApps = [{
     name: "Browser",
     icon: "/media/ie.png",
@@ -26,6 +31,11 @@ const defaultApps = [{
     name: "Settings",
     icon: "/media/settings.png",
     href: "/settings.html",
+    pinned: true
+}, {
+    name: "App Store",
+    icon: "/media/app-store.png",
+    href: "/app-store.html",
     pinned: true
 }];
 
@@ -59,9 +69,6 @@ const fullApps = {
             shortcut.draggable = false;
             shortcut.innerHTML = `<img draggable="false" src="${root + app.icon}"><div>${app.name}</div>`;
             shortcut.dataset.smartdisplaypiName = app.name;
-            if (app.icon.includes("/media/usr/")) {
-                shortcut.classList.add("usr");
-            }
             shortcut.classList.add('app-list-app');
             this.appList.appendChild(shortcut);
             this.apps.push(app.name);
@@ -117,13 +124,43 @@ function search(query) {
         fullApps.noResults.style.display = "block";
     }
 }
-var shortcuts = document.createElement("DIV");
-shortcuts.id = "shortcuts";
+let dock = document.createElement("DIV");
+dock.id = "shortcuts";
 let shortcutsWrapper = document.createElement("DIV");
 shortcutsWrapper.classList.add("shortcuts-wrapper");
 document.body.appendChild(shortcutsWrapper);
-shortcutsWrapper.appendChild(shortcuts);
+shortcutsWrapper.appendChild(dock);
+const shortcuts = document.createElement("DIV");
+shortcuts.classList.add("apps-container");
+dock.appendChild(shortcuts)
 let shortcut = document.createElement("A");
+let tools = document.createElement("DIV");
+tools.classList.add("tools");
+tools.innerHTML = `<span draggable="false" id="time" style="
+font-size: 30px;
+">12:35<br>
+</span><span style="
+padding-top: -100px;
+">AM; 8/13/2022</span><br>
+<span><button class="p-btn"><img src="${root}/assets/feather/triangle.svg"></button><button class="p-btn"><img src="${root}/assets/feather/volume-2.svg"></button><button data-p-open-actions="#actions_power" class="p-btn"><img src="${root}/assets/feather/power.svg"></button>
+</span>`;
+document.getElementById("shortcuts").appendChild(tools);
+let powerAction = document.createElement("DIV");
+powerAction.classList.add("p-action-background");
+powerAction.innerHTML = `<div class="p-action-big-container" id="actions_power" data-p-close-on-outside="true">
+    <div class="p-action-container">
+      <div class="p-action-title">
+        <h3 class="p-action-title--intern">What would you like to do?</h3>
+      </div>
+      <a href="#" class="p-action--intern p-action-neutral">Power Off</a>
+      <a href="#" class="p-action--intern p-action-neutral">Suspend</a>
+      <a href="#" class="p-action--intern">Reboot</a>
+    </div>
+    <div class="p-action-container">
+      <a href="#" class="p-action--intern p-action-cancel" data-p-cancel-action="true">Cancel</a>
+    </div>
+  </div>`;
+document.body.appendChild(powerAction);
 shortcut.onclick = () => {
     if(!fullApps.initialized) {
         fullApps.init();
@@ -231,15 +268,7 @@ function closeopen() {
         fullApps.show();
     }
 }
-homebutton = document.createElement("DIV");
-homebutton.id = "homebutton";
-homesquare = document.createElement("DIV");
-homesquare.id = "homesquare"
-document.body.appendChild(homebutton);
-homebutton.appendChild(homesquare);
-homebutton.addEventListener('click', () => {
-    window.location.href = root + "/index.html";
-}, false);
+
 if (settings.get("ambient", true) && !window.location.href.includes("ambient.html")) {
     function ambient() {
         window.location.href = root + "/ambient.html";
@@ -307,17 +336,6 @@ BetterBoard.init({
 window.addEventListener("load", function() {
     BetterBoard.run('yourmom');
 })
-    var _paq = window._paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-    var u="https://vestal.tk/matomo/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '2']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-})();
 // Hammer Time
 // Let's get it started
 // Let's get it started (up in here)

@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 # update.sh - A frontend for ./updates.sh
 echoerr() { printf "%s\n" "$*" >&2; }
 ERR=0

@@ -3,7 +3,7 @@
     "electron": "^19.0.6"
   },
   "name": "smartdisplaypi",
-  "description": "An awesome smart display powered by Google Assistant and Raspberry Pi. ## NOTE This is still in development. Google Assistant is currently broken due to the libraries. A fix is on the way. For now, please use [GassistPi](https://github.com/shivasiddharth/GassistPi)",
+  "description": "An awesome smart display powered by Google Assistant and Raspberry Pi.",
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
@@ -79,7 +79,6 @@
     "proto-list": "^1.2.4",
     "pump": "^3.0.0",
     "readable-stream": "^2.3.7",
-    "reboot": "^0.1.0",
     "responselike": "^1.0.2",
     "roarr": "^2.15.4",
     "safe-buffer": "^5.1.2",

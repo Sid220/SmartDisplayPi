@@ -1,6 +1,32 @@
+/*
+ * Copyright (C) 2022 The Fake Slim Shady
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
 @import url("assets/pupertino/newfull.css");
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
 body {
   padding-bottom: calc(13vh + 5px);
 }
@@ -14,7 +40,7 @@ html, body {
   font-family: Inter,sans-serif;
 }
 body {
-  --bg-docs: #212121;
+  --bg-docs: #1a1a1a;
   --color-docs: #e6e6e6;
   --route-bg: #040404;
   --white-or-black: #212121;
@@ -25,7 +51,7 @@ body {
   --p-btn-scope-unactive: #e4e4e4;
   --p-btn-scope-action: #d0d0d0;
   --p-color-card: #fff;
-  --p-bg-card: #1a1a1a;
+  --p-bg-card: #212121;
   --p-bd-card: #1d1d1d;
   --p-suggested-bg: #0e0e0e;
   --p-suggested-color: #e6e6e6;
@@ -68,6 +94,7 @@ iframe.google-assistant-output {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 8px;
   display: flex;
+  background: var(--p-bg-card);
 }
 .switchoption label.p-form-switch {
   flex-shrink: 0;
@@ -238,38 +265,17 @@ webview {
 
 }
 
-#homebutton {
-  position: fixed;
-  left: 0.75%;
-  bottom: 0.75%;
-  border-radius: 50%;
-  margin: 0;
-  z-index: 11;
-  width: 12vh;
-  height: 12vh;
-  background: rgba(100, 100, 100, 0.3);
-  padding: 1.01vh;
-}
-
-#homesquare {
-  width: 50%;
-  height: 50%;
-  border: 4px solid #FFFFFF;
-  box-sizing: border-box;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0);
-  margin: 25%;
-}
 .full-apps {
-  background: rgba(100, 100, 100, 0.3);
   width: calc(100vw - 20px);
-  position: absolute;
+  position: fixed;
   height: 100%;
   top: 0;
   left: 0;
   padding: 10px;
-  backdrop-filter: blur(1.4rem);
   z-index: 9;
+  background: linear-gradient(163.27deg, rgba(47, 47, 47, 0.5925) 47.94%, rgba(33, 33, 33, 0.75) 77.13%);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(188.047px);
 }
 .app-list-app {
   display: inline-block;
@@ -279,13 +285,13 @@ webview {
   text-align: center;
   color: white;
 }
+
 input.full-apps-search {
   width: 75vw;
   margin: auto;
   display: block;
   margin-bottom: 15px;
   border-radius: 50px;
-  font-family: 'Roboto', sans-serif;
   padding: 12px 20px;
   transition: 0.5s;
   background: none;
@@ -297,6 +303,24 @@ input.full-apps-search:focus {
 input.full-apps-search::placeholder {
   color: #808080;
 }
+.tools {
+  border-radius: 94.0234px;
+  display: inline-block;
+  width: fit-content;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding-right: 40px;
+  height: 100%;
+  float: right;
+  vertical-align: middle;
+  text-align: center;
+}
+.tools button {
+  margin: 3px;
+  background: none;
+  padding: 0.4rem;
+  line-height: 1px;
+}
 .shortcuts-wrapper {
   position: fixed;
   bottom: 5px;
@@ -304,40 +328,39 @@ input.full-apps-search::placeholder {
   z-index: 11;
 }
 #shortcuts {
-  width: fit-content;
+  width: 95vw;
   height: 13vh;
+  display: flex;
+  justify-content: space-between;
   padding-top: 0.75%;
-  background: rgba(100, 100, 100, 0.3);
-  padding-right: calc(5vh + 14px) !important;
   white-space: nowrap;
-  border-radius: 65px;
   margin: 0 auto;
+  background: linear-gradient(163.27deg, rgba(47, 47, 47, 0.5925) 47.94%, rgba(33, 33, 33, 0.75) 77.13%);
+  mix-blend-mode: normal;
+  border: 1.9594px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(188.047px);
+  border-radius: 94.0234px;
 }
 #shortcuts a:first-child {
   margin-left: calc(5vh + 14px) !important;
 }
-#shortcuts a:not(a.usr), .full-apps a:not(a.usr) {
+#shortcuts a, .full-apps a {
   margin-left: 15px;
 }
 
-#shortcuts a.usr, .full-apps a.usr {
-  margin-left: 20px;
-}
-
-#shortcuts a:not(a.usr) img, .full-apps a:not(a.usr) img {
+#shortcuts a img, .full-apps a img {
   max-height: 12vh;
   margin: 0;
 }
 .setting-list {
   font-size: x-large;
 }
-
-#shortcuts a.usr img, .full-apps a.usr img {
-  min-height: 11.5vh;
-  transform: scale(1.233196);
-  margin: 0;
+.apps-container {
+  width: 80%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: inline-block;
 }
-
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
@@ -372,33 +395,27 @@ input.full-apps-search::placeholder {
 }
 
 .setting-menu {
-  width: 100%;
   height: 110px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .setting-menu img{
   float: left;
   height: 80%;
-  border-radius: 4px;
   margin: 10px;
 }
 
 .setting-menu h1 {
-  margin-top: -5px;
-  font-style: normal;
-  font-weight: 500;
+  margin-top: 4px;
+  font-weight: 700;
   font-size: 25px;
   line-height: 29px;
-  color: #373737;
 }
 
 .setting-menu p {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   line-height: 18px;
-  color: #727272;
 }
 
 #halogoset {

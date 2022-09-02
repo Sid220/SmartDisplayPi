@@ -1,3 +1,7 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
 var ById = function (id) {
     return document.getElementById(id);
 }
@@ -175,7 +179,7 @@ view.addEventListener('did-navigate', updateNav);
 view.addEventListener('did-fail-load', (error) => {
     console.log(error.errorCode);
     if (error.isMainFrame) {
-        view.loadURL('file:///' + __dirname + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+        view.loadURL(__dirname + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
     }
 });
 document.addEventListener("closeStart", function () {
@@ -185,7 +189,7 @@ document.addEventListener("openStart", function () {
     view.style.height = "calc(100vh - 60px - 13vh - 0.70vh)";
 });
 home.addEventListener("click", function () {
-    view.loadURL('file:///' + __dirname + '/browserHome.html?' + encodeURI(json2Url.serialize(settings.get("Browser.bookmarks", defaultBookmarks))));
+    view.loadURL(__dirname + '/browserHome.html?' + encodeURI(json2Url.serialize(settings.get("Browser.bookmarks", defaultBookmarks))));
 });
 window.addEventListener("beforeunload", function (e) {
     settings.set("Browser.lastState", { url: view.getURL() });
@@ -195,7 +199,7 @@ function domReady() {
     console.log("ran");
     if (first === 0) {
         if (settings.get("Browser.lastState", null) === null) {
-            view.loadURL('file:///' + __dirname + '/browserHome.html?' + encodeURI(json2Url.serialize(settings.get("Browser.bookmarks", defaultBookmarks))));
+            view.loadURL(__dirname + '/browserHome.html?' + encodeURI(json2Url.serialize(settings.get("Browser.bookmarks", defaultBookmarks))));
             first = 1;
             return;
         }

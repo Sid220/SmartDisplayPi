@@ -1,17 +1,22 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../style.css">
+
   <script>
     const Store = require('electron-store');
     const settings = new Store();
   </script>
   <style>
-    input#nextbutton {
-      display: none;
-    }
     .err {
         color: orange;
     }
@@ -19,70 +24,42 @@
 </head>
 
 <body>
-
-<h1 id="bar">Google Assistant <input type="button" class="green" id="nextbutton"
-                                               onclick="checkConnection();" value="Next"></h1>
+<div class="wallpaper-container">
+  <span class="wallpaper-text-container">
+    <span class="wallpaper-title">SmartDisplayPi</span><br>
+    <span>Tactical Tree</span>
+  </span><img src="../media/default-background.jpg" class="wallpaper-wallpaper">
+</div>
+<div id="bar">
+  <button class="p-btn" disabled="">Finish</button>
+  <button class="p-btn" disabled="" onclick="window.location = 'setup3.html'" id="nextbutton">Next</button>
+  <button class="p-btn" onclick="window.location = 'setup1.html'">Previous</button>
+</div>
 <div id="center">
-  <h2 class="words">Would you like to install Google Assistant now? You can install it later.</h2>
-  <input type="button" class="green" id="install" onclick="installGoogleAssistant();" value="Install"> <input type="button" id="skip" onclick="window.location = '../index.html'" value="Skip">
-  <pre style="color: white;display: none; background: black;font-family: auto;padding: 10px;max-height: 50vh;overflow-y: scroll;" id="output"></pre>
+  <h2 class="words">Would you like to see a cursor?</h2>
+    <p>Will take effect next reboot</p>
+  <input type="button" class="p-btn p-prim-col" id="install" onclick="noCursor();" value="No"> <input class="p-btn" type="button" id="skip" onclick="window.location = 'setup3.html'" value="Yes">
 </div>
 <script>
   const root = require('electron-root-path').rootPath;
-  var myHistory = [];
-  const child_process = require('child_process');
+  function noCursor() {
+    const command = 'cd ' + root + ' && RAWSLIMCONF=$(<assets/slim_NOCURSOR.conf) && echo "${RAWSLIMCONF/\\[SMARTDISPLAYPI_USER_HERE_YOUR_MOM\\]/"$USER"}" | sudo tee /etc/slim.conf > /dev/null';
+    const { exec } = require("child_process");
 
-  let runCommand = ({command, onout, onerr, ondone}) => {
-    const proc = child_process.spawn(
-            command,
-            [],
-            {
-              shell: true,
-              stdio: ["ignore", "pipe", "pipe"],
-            },
-    )
-    proc.stdout.on("data", (data) => onout(data.toString()));
-    proc.stdout.on("data", (data) => document.getElementById("output").innerHTML += data.toString());
-    proc.stderr.on("data", (data) => onerr(data.toString()));
-    proc.stderr.on("data", (data) => document.getElementById("output").innerHTML += "<span class='err'>" + data.toString() + "</span>");
-    proc.on("close", (code) => ondone(code))
-  }
-
-  async function doInstall(command) {
-    let entry = {command, stdout: "", stderr: "", error: null, running: true}
-    myHistory.push(entry);
-    myHistory = myHistory
-    let onout = (data) => {
-      entry.stdout += data
-      myHistory = myHistory
-      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
-    }
-    let onerr = (data) => {
-      entry.stderr += data
-      myHistory = myHistory
-      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
-    }
-    let ondone = (code) => {
-      entry.running = false
-      entry.error = (code !== 0)
-      myHistory = myHistory
-      if(entry.error) {
-        document.getElementById("output").innerHTML += "<span class='err'>Error: " + code + "</span>";
-        document.createElement("p").innerText = "There was an error installing Google Assistant. Please check the output for more information and report any issues to the developer. <a href='#' onclick='window.location.reload()'>Retry</a>";
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        alert("Error!");
+        return;
       }
-      document.getElementById("install").onclick = () => window.location = "../index.html";
-      document.getElementById("install").disabled = false;
-      document.getElementById("install").innerHTML = "Continue";
-      document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
-    }
-    runCommand({command,onout,onerr,ondone});
-    console.log(myHistory);
-  }
-
-  function installGoogleAssistant() {
-    document.getElementById("install").disabled = true;
-    document.getElementById("skip").style.display = "none";
-    doInstall('cd ' + root + ' && bash '+ root +'/assets/gassist.sh');
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        alert("Error!");
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      window.location = "setup3.html"
+    });
   }
 </script>
 </body>

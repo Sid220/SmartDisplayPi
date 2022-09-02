@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2022 Edgar Pérez
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 .p-dark-mode {
 
   --p-btn-border: #454545;
@@ -11,7 +17,7 @@
   --p-bd-card: #1d1d1d;
 
 	--p-suggested-bg: #0e0e0e;
-	--p-suggested-color: #e6e6e6;
+	--p-suggested-color: #afafaf;
 	--route-bg:#040404;
 
 

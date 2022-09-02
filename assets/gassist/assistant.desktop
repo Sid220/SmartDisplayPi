@@ -1,5 +1,3 @@
-[Desktop Entry]
-Name=Google Assistant
-Exec=bash -c 'cd ~/SmartDisplayPi/assets/gassist/ && echo 0 > SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother && bash start_assistant.sh'
-Terminal=false
-Type=Application
+Copyright (C) 2022 The Fake Slim Shady
+
+    SPDX-License-Identifier: MIT

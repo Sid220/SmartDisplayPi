@@ -1,3 +1,7 @@
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 xset s off
 echo "[DEV]: SCREENSAVER: OFF"
 xset -dpms

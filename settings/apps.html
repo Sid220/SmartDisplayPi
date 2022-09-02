@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -62,7 +68,17 @@
 </head>
 
 <body>
-
+<!-- Button for App Alert -->
+<a href="#" class="p-btn" style="display: none" id="app-alert-button" data-p-open-modal="#app-alert"></a>
+<div class="p-modal-background">
+    <div class="p-modal" id="app-alert">
+        <h2>Error</h2>
+        <p>Button with that name already exists! Please choose another name or delete the existing widget.</p>
+        <div class="p-modal-button-container">
+            <a href="#" data-p-cancel>OK</a>
+        </div>
+    </div>
+</div>
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -76,8 +92,8 @@
             <option value="https://">https</option>
             <option value="http://">IDK</option>
         </select></div> :// <input data-kioskboard-specialcharacters="true" class="p-form-text p-form-no-validate" id="url" required type="text"><br>
-            <input type="hidden" id="icon" value="internet-web-browser.svg">
-            Icon: <button type="button" class="p-btn" onclick="openIconForm()"><img id="icon-preview" style="height: 100px; width: 100px" src="https://cdn.jsdelivr.net/gh/Sid220/smartdisplaypi-backend/kde-icons/icons/internet-web-browser.svg"></button><br>
+            <input type="hidden" id="icon" value="https://media.macosicons.com/parse/files/macOSicons/c0ab8a80fa26713879c0c77979048960_Generic_App.icns">
+            Icon: <button type="button" class="p-btn" onclick="openIconForm()"><img id="icon-preview" style="height: 100px; width: 100px" src="https://media.macosicons.com/parse/files/macOSicons/98c33e816ea92c3f1ee94b5c4f1e4bba_low_res_Generic_App.png"></button><br>
             <input class="p-btn p-prim-col" type="submit" value="Done">
         </form>
 
@@ -90,7 +106,7 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span><br>
-            <input type="text" oninput="search(this.value)" />
+            <input class="p-form-text p-form-no-validate" type="text" placeholder="Search..." oninput="search(this.value)" />
             <div id="icons"></div>
     </div>
 
@@ -155,7 +171,7 @@ add
 </span> New</li>`;
         apps.forEach(app => {
             var li = document.createElement("li");
-            if(app.name !== "Browser" && app.name !== "Settings" && app.name !== "Ambient") {
+            if(app.name !== "Browser" && app.name !== "Settings" && app.name !== "Ambient" && app.name !== "App Store") {
                 li.innerHTML = app.name + ` <a onclick="deleteApp('` + app.name + `')"><span class="material-icons-round">
 delete
 </span></a>`;
@@ -176,32 +192,31 @@ refreshApps();
     }
     function createApp() {
         if (apps.findIndex(item => item.name === document.getElementById("name2").value) !== -1) {
-            alert("App with that name already exists! Please choose another name or delete the existing app.");
+            document.getElementById("app-alert-button").click();
             return;
         }
         const download = require('download');
         const url = document.getElementById("icon").value;
         const filename = url.substr(url.lastIndexOf("/")+1);
-        console.log(filename)
+        const { exec } = require("child_process");
         download(url, root + '/media/usr/').then(() => {
             console.log('File downloaded successfully!');
+            exec("cd " + root + "/media/usr && icns2png -x " + filename, (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
         })
-        const { exec } = require("child_process");
 
-        exec("cd " + root + " && icns2png -x ./media/usr/" + filename, (error, stdout, stderr) => {
-            if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-        });
         apps.push(
             {
-                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + filename + "_256x256x32.png", pinned: false
+                name: document.getElementById("name2").value, href: "/webview.html?url=" + encodeURIComponent(document.getElementById("protocol").value + document.getElementById("url").value), icon: "/media/usr/" + filename.replace(".icns", "_256x256x32.png"), pinned: false
             });
         settings.set("apps", apps);
         refreshApps();
@@ -211,6 +226,8 @@ refreshApps();
         document.getElementById("iconModal").style.display = "none";
     }
 </script>
+<script src="../assets/pupertino/modals.js"></script>
+
 </body>
 
 </html>

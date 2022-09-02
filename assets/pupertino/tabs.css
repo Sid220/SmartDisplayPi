@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2022 Edgar Pérez
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 :root{
   --p-modal-bg: rgba(255, 255, 255, 0.8);
   --p-modal-bd-color: rgba(0,0,0,.1);

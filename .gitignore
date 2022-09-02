@@ -1,3 +1,11 @@
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 /node_modules/*
 /media/usr/*
+/apps/apps/*
+/apps/widgets/*
 !/media/usr/.gitkeep
+!/apps/widgets/.gitkeep
+!/apps/apps/.gitkeep

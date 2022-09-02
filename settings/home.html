@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -56,7 +62,17 @@
 </head>
 
 <body>
-
+<!-- Button for Widget Alert -->
+<a href="#" class="p-btn" style="display: none" id="widget-alert-button" data-p-open-modal="#widget-alert"></a>
+<div class="p-modal-background">
+    <div class="p-modal" id="widget-alert">
+        <h2>Error</h2>
+        <p>Widget with that name already exists! Please choose another name or delete the existing widget.</p>
+        <div class="p-modal-button-container">
+            <a href="#" data-p-cancel>OK</a>
+        </div>
+    </div>
+</div>
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -178,7 +194,7 @@ delete
     function createWidget() {
         // I'm gonna be out of a job soon.
         if (widgets.findIndex(item => item.name === document.getElementById("name2").value) !== -1) {
-            alert("Widget with that name already exists! Please choose another name or delete the existing widget.");
+            document.getElementById("widget-alert-button").click();
             return;
         }
         widgets.push(
@@ -192,6 +208,8 @@ delete
     }
 </script>
 </div>
+<script src="../assets/pupertino/modals.js"></script>
+
 </body>
 
 </html>

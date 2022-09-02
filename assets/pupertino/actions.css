@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2022 Edgar Pérez
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 :root {
   --font: -apple-system, "Inter", sans-serif;
   --primary-col-ac: #0f75f5;
@@ -21,7 +27,7 @@
   top: 0;
   transition: 0.3s;
   width: 100vw;
-  z-index: 5;
+  z-index: 11;
 }
 
 .p-action-background.nowactive {

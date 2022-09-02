@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -17,26 +23,57 @@
 </head>
 
 <body>
+<div class="wallpaper-container">
+  <span class="wallpaper-text-container">
+    <span class="wallpaper-title">SmartDisplayPi</span><br>
+    <span>Tactical Tree</span>
+  </span><img src="../media/default-background.jpg" class="wallpaper-wallpaper">
+</div>
+<div id="bar">
+  <button class="p-btn" disabled="">Finish</button>
+  <button class="p-btn" disabled="" onclick="checkConnection();" id="nextbutton">Next</button>
+  <button class="p-btn" disabled="">Previous</button>
+</div>
 
-  <h1 id="bar">Welcome to SmartDisplayPi! <input type="button" class="green" id="nextbutton"
-      onclick="checkConnection();" value="Next"></h1>
+<!-- Button for Gnome Control Centre Alert -->
+<a href="#" class="p-btn" style="display: none" id="gnome-control-centre-alert-button" data-p-open-modal="#gnome-control-centre-alert"></a>
+<!-- Button for No Internet Alert -->
+<a href="#" class="p-btn" style="display: none" id="no-internet-alert-button" data-p-open-modal="#no-internet-alert"></a>
+<div class="p-modal-background">
+  <div class="p-modal" id="gnome-control-centre-alert">
+    <h2>Warning!</h2>
+    <p>Do not click minimize after this window is opened, the window will disappear until reboot and will slow down your smartdisplay until then.</p>
+    <div onclick='settings.set("firstTimeOpeningExternalApp", false);
+        gnomeControlCentre();' class="p-modal-button-container">
+      <a href="#" data-p-cancel>OK</a>
+    </div>
+  </div>
+  <div class="p-modal" id="no-internet-alert">
+    <h2>Error</h2>
+    <p>You are not connected to the internet!</p>
+    <div onclick='gnomeControlCentre();' class="p-modal-button-container">
+      <a href="#" data-p-cancel>OK</a>
+    </div>
+  </div>
+</div>
+
   <div id="center">
     <h2 class="words">To continue, please connect to the internet</h2>
-    <input type="button" class="green" id="connect" onclick="gnomeControlCentre();" value="Connect">
+    <input type="button" class="p-btn p-prim-col" id="connect" onclick="gnomeControlCentre();" value="Connect">
 
   </div>
   <script>
     function gnomeControlCentre() {
       if (settings.get("firstTimeOpeningExternalApp", true)) {
-        alert("Do not click minimize after this window is opened, it will disappear until reboot and will slow down your smartdisplay until then.");
-        settings.set("firstTimeOpeningExternalApp", false);
-        gnomeControlCentre();
+        document.getElementById("gnome-control-centre-alert-button").click();
         return;
       }
       var exec = require('child_process').exec;
       exec('gnome-control-center wifi', function (error, stdout, stderr) { console.log(stdout); console.log(stderr); if (error) throw error; });
-      document.getElementById("nextbutton").style.display = "inline";
-      document.getElementById("connect").classList.remove("green");
+      let nextButton = document.getElementById("nextbutton");
+      nextButton.classList.add("p-prim-col");
+      nextButton.disabled = false;
+      document.getElementById("connect").classList.remove("p-prim-col");
     }
     function checkConnection() {
       if (navigator.onLine) {
@@ -45,11 +82,11 @@
         //window.location = "../index.html";
       }
       else {
-        alert("You are not connected. Please connect to the internet");
-        gnomeControlCentre();
+        document.getElementById("no-internet-alert-button").click();
       }
     }
   </script>
+<script src="../assets/pupertino/modals.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: SmartDisplayPi
+Upstream-Contact: The Fake Slim Shady (Sid220) <lafakeslimshady@gmail.com>
+Source: https://sdp.vestal.tk
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...

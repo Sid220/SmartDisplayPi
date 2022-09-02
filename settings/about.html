@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +11,13 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><i class="icon icon_bold icon_go-previous"></i> Settings</span></div><br><br>
-<p><b><u>SmartDisplayPi Version</u></b>: <span id="version">v0.0.1.alpha</span></p>
+<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div><br><br>
+<p><b><u>SmartDisplayPi Version</u></b>: <span id="version">v0.0.1.alpha</span> - Tactical Tree</p>
   <p id="ubuntu-version"></p>
   <p id="[DEVMODE]"></p>
   <script src="../scripts/universal.js"></script>
 <script>
-    const currentVersion = "v0.1.0.alpha";
+    const currentVersion = "v0.2.0.alpha";
     const updateSchedule = "alpha";
   const exec = require('child_process').exec;
 

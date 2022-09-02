@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 cd ~/ || exit
 echo "  ______                                       __      _______   __                      __                      _______   __ 
  /      \                                     /  |    /       \ /  |                    /  |                    /       \ /  |
@@ -17,7 +22,7 @@ if [ $USER = "root" ]; then
     exit 1
 fi
 release=$(lsb_release -ds)
-if [ "$release" != 'Ubuntu 21.10' ]; then
+if [ "$release" != 'Ubuntu 21.10' ] && [ "$2" != "CIRCLECI" ]; then
     echo "This script is only intended for fresh installations of Ubuntu 21.10, you are running $release"
     echo -n "Would you like to continue anyway? (y/N): "
     read continue0
@@ -27,13 +32,15 @@ if [ "$release" != 'Ubuntu 21.10' ]; then
         exit 1
     fi
 fi
-echo "Please note: This script is only intended for fresh installations of Ubuntu 21.10 on Raspberry Pis and will make breaking changes to your computer."
-echo -n "Would you like to continue? (y/N): "
-read continue1
-if [ "$continue1" = "y" ]; then
-    echo "Continuing..."
-else
-    exit 1
+if [ "$2" != "CIRCLECI" ]; then
+  echo "Please note: This script is only intended for fresh installations of Ubuntu 21.10 on Raspberry Pis and will make breaking changes to your computer."
+  echo -n "Would you like to continue? (y/N): "
+  read continue1
+  if [ "$continue1" = "y" ]; then
+      echo "Continuing..."
+  else
+      exit 1
+  fi
 fi
 if [ -z "$1" ]; then
   BRANCH="master"
@@ -44,7 +51,7 @@ else
     BRANCH="beta-branch"
   else
     BRANCH="master"
-fi
+  fi
 fi
 sudo apt update && sudo apt upgrade -y
 if [ $? != 0 ]; then

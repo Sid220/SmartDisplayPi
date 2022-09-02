@@ -1,3 +1,9 @@
+<!--
+Copyright (C) 2022 The Fake Slim Shady
+
+SPDX-License-Identifier: MIT
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -8,23 +14,24 @@
 </head>
 
 <body>
-<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><i class="icon icon_bold icon_go-previous"></i> Settings</span></div>
+<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div>
     <br><br>
 
     <h1>
         Ambient
     </h1>
-    <div class="switchoption">
-    <label for="ambient" class="switchtext">Automatically go into Ambient Mode</label>
-    <label class="switch">
+    <div onclick="document.getElementById('ambient').click();" class="switchoption">
+        <label class="switchtext">Automatically go into Ambient Mode</label>
+        <label class="p-form-switch">
         <input type="checkbox"
             oninput="settings.set('ambient', this.checked); if(!this.checked) {document.getElementById('ambientTime').disabled = true;} else {document.getElementById('ambientTime').disabled = false;}"
             id="ambient">
-        <span class="slider"></span>
-    </label>
+        <span></span>
+        </label>
+    </div>
     </div>  
     <label for="ambientTime">after</label>
-    <input required min="5" max="10000000" type="number" oninput="if(this.value !== '') { settings.set('ambientDelay', this.value) }" id="ambientTime">
+    <input class="p-form-text p-form-no-validate" required min="5" max="10000000" type="number" oninput="if(this.value !== '') { settings.set('ambientDelay', this.value) }" id="ambientTime">
     <label for="ambientTime">minutes of inactivity.</label>
 
     </div>

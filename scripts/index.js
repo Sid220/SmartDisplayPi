@@ -1,3 +1,7 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
 function preloadImages(array) {
     if (!preloadImages.list) {
         preloadImages.list = [];
@@ -17,9 +21,9 @@ function preloadImages(array) {
         img.src = array[i];
     }
 }
-nextImage = "file:///" + root + "/media/default-background.jpg";
+nextImage = root + "/media/default-background.jpg";
 function updateBackground() {
-    document.getElementById("background").style.backgroundImage = "url(" + nextImage + ")";
+    document.getElementById("background").style.backgroundImage = "url('" + nextImage + "')";
     setTimeout(() => {
         fetch("https://backend.sdp.vestal.tk/background.php")
             .then(response => response.text())
@@ -30,71 +34,104 @@ function updateBackground() {
     }, settings.get("background_refresh_rate", 10000));
 }
 window.onload = function () {
-    widgets = settings.get("widgets", [
+    let widgets = settings.get("widgets", [
         {
-            name: "Traffic",
-            url: "https://www.google.com/maps/"
+            name: "clock",
+            usr: false,
+            type: "INJECTED_HTML",
+            source: "clock.htmp",
+            uuid: "sdpe7643333-63b0-4758-a4e0-d8a3935b6d27"
+        },
+        {
+            name: "weather",
+            usr: false,
+            type: "INJECTED_HTML",
+            source: "weather.htmp",
+            uuid: "sdp51510e68-a6e7-4b4c-8e4d-24c7d94695a9"
         },
         {
             name: "Weather",
-            url: "https://weather.com/weather/today/"
+            usr: true,
+            source: "https://weather.com/weather/today/"
         },
         {
             name: "Calendar",
-            url: "https://calendar.google.com/calendar/u/0/r/customday"
+            usr: true,
+            source: "https://calendar.google.com/calendar/u/0/r/customday"
         }]);
     widgets.forEach(widget => {
-        var webview = document.createElement("webview");
-        webview.addEventListener('did-fail-load', (error) => {
-            console.log(error.errorCode);
-            if (error.isMainFrame) {
-                webview.loadURL('file:///' + root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+        if(widget.usr) {
+            var webview = document.createElement("webview");
+            webview.addEventListener('did-fail-load', (error) => {
+                console.log(error.errorCode);
+                if (error.isMainFrame) {
+                    webview.loadURL(root + "/browserError.html?error=" + encodeURI(error.errorDescription) + "&errorcode=" + encodeURI(error.errorCode));
+                }
+            });
+            if (!settings.get("editingHome", false)) {
+                if (settings.get("autoloadWidgets", false)) {
+                    webview.src = widget.url;
+                } else {
+                    webview.setAttribute("src", "notloaded.html?url=" + widget.url);
+                }
+            } else {
+                webview.src = "about:blank";
+                webview.style.userSelect = "none";
             }
-        });
-        if (!settings.get("editingHome", false)) {
-            if (settings.get("autoloadWidgets", false)) {
-                webview.src = widget.url;
-            }
-            else {
-                webview.setAttribute("src", "notloaded.html?url=" + widget.url);
-            }
-        }
-        else {
-            webview.src = "about:blank";
-            webview.style.userSelect = "none";
-        }
-        webview.setAttribute("useragent", "Mozilla/5.0 (Linux; Android 12; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36 SmartDisplayPi");
+            webview.setAttribute("useragent", "Mozilla/5.0 (Linux; Android 12; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36 SmartDisplayPi");
 
-        var div = document.createElement("div");
-        div.classList.add("widget");
-        var h3 = document.createElement("h3");
-        h3.innerHTML = widget.name + ` <span onclick="kill(parentElement.parentElement.getElementsByTagName('webview')[0])" style="float: right; display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            var div = document.createElement("div");
+            div.classList.add("widget");
+            div.style.width = settings.get("widgetWidth", 200) + "px";
+            div.style.height = settings.get("widgetHeight", 200) + "px";
+            var h3 = document.createElement("h3");
+            h3.innerHTML = widget.name + ` <span onclick="kill(parentElement.parentElement.getElementsByTagName('webview')[0])" style="float: right; display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
             <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
         </svg></span>`;
-        div.appendChild(h3);
-        div.appendChild(webview);
-        div.setAttribute("data-item-id", widgets.indexOf(widget));
-        document.getElementById("grid").appendChild(div);
-        webview.addEventListener("did-start-loading", function () {
-            if (webview.src.includes("notloaded.html?url=")) {
-                this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "none";
+            div.appendChild(h3);
+            div.appendChild(webview);
+            div.setAttribute("data-item-id", widgets.indexOf(widget));
+            document.getElementById("grid").appendChild(div);
+            webview.addEventListener("did-start-loading", function () {
+                if (webview.src.includes("notloaded.html?url=")) {
+                    this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "none";
 
-            }
-            else {
-                this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "block";
+                } else {
+                    this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "block";
 
+                }
+            });
+        }
+        else {
+            if(widget.type === "INJECTED_HTML") {
+                const htmp = require("htmpp");
+                htmp.getAll("apps/widgets/" + widget.name + "/" + widget.source, function(data, err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                        let container = document.createElement("DIV");
+                        container.innerHTML = data.html;
+                        container.classList.add("widget");
+                        container.style.width = settings.get("widgetWidth", 200) + "px";
+                        container.style.height = settings.get("widgetHeight", 200) + "px";
+                        container.id = widget.uuid;
+                        container.setAttribute("data-item-id", widgets.indexOf(widget));
+                        document.getElementById("grid").appendChild(container);
+                        let style = document.createElement("style");
+                        style.innerHTML = data.css;
+                        document.head.appendChild(style);
+                        let js = new Function(data.js);
+                        js();
+                    }
+                })
             }
-        });
+        }
     });
 
     updateBackground();
     setInterval(updateBackground, settings.get("background_refresh_rate", 10000));
-    widgets = document.getElementsByClassName("widget");
-    for (let i = 0; i < widgets.length; i++) {
-        widgets[i].style.width = settings.get("widgetWidth", 200) + "px";
-        widgets[i].style.height = settings.get("widgetHeight", 200) + "px";
-    }
     const Packery = require('packery');
     var grid = document.querySelector('#grid');
     var pckry = new Packery(grid, {

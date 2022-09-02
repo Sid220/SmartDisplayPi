@@ -1,3 +1,7 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
 const { app, BrowserWindow, Menu } = require('electron');
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -16,7 +20,7 @@ const createWindow = () => {
         win.loadFile('Setup/setup0.html');
     }
     else {
-        win.loadFile('settings/editMenu.html');
+        win.loadFile('index.html');
     }
     if (settings.get("devMode", false) === false) {
         win.kiosk = true

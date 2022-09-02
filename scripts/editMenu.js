@@ -1,3 +1,7 @@
+// Copyright (C) 2022 The Fake Slim Shady
+//
+// SPDX-License-Identifier: MIT
+
 fullApps.init();
 fullApps.show();
 function getKeyByValue(object, value) {

@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright (C) 2022 The Fake Slim Shady
+#
+# SPDX-License-Identifier: MIT
+
 # updates.sh - A backend for ./update.sh
 FILE=~/.config/autostart/lxpolkit.desktop
 if ! test -f "$FILE"; then
