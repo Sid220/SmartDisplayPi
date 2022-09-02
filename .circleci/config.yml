@@ -17,7 +17,7 @@ jobs:
           command: "bash ./install.sh alpha CIRCLECI"
       - run:
           name: Try updating
-          command: "bash ./update.sh"
+          command: "bash ./update.sh CIRCLECI"
 
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}

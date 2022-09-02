@@ -23,9 +23,16 @@ if ! pkexec apt update && apt upgrade -y ; then
     ERR=1
 fi
 echo "[DEV]: Installing system (aptitude) packages..."
-if ! bash ./updates.sh; then
-    echoerr "There was an error updating. Look above for more info."
-    ERR=1
+if [ "$1" != "CIRCLECI" ]; then
+  if ! bash ./updates.sh; then
+      echoerr "There was an error updating. Look above for more info."
+      ERR=1
+  fi
+else
+  if ! bash ./updates.sh CIRCLECI; then
+      echoerr "There was an error updating. Look above for more info."
+      ERR=1
+  fi
 fi
 if [ $ERR = 1 ]; then
   echoerr "[DEV]: There was an error."
