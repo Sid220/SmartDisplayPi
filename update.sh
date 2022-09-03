@@ -18,9 +18,16 @@ if ! npm install ; then
     ERR=1
 fi
 echo "[DEV]: Updating system (aptitude) packages..."
-if ! pkexec apt update && apt upgrade -y ; then
-    echoerr "There was an error updating. Look above for more info."
-    ERR=1
+if [ "$1" != "CIRCLECI" ]; then
+  if ! pkexec apt update && apt upgrade -y ; then
+      echoerr "There was an error updating. Look above for more info."
+      ERR=1
+  fi
+else
+  if ! sudo apt update && apt upgrade -y ; then
+      echoerr "There was an error updating. Look above for more info."
+      ERR=1
+  fi
 fi
 echo "[DEV]: Installing system (aptitude) packages..."
 if [ "$1" != "CIRCLECI" ]; then
