@@ -20,7 +20,7 @@ const createWindow = () => {
         win.loadFile('Setup/setup0.html');
     }
     else {
-        win.loadFile('index.html');
+        win.loadFile('src/index.html');
     }
     if (settings.get("devMode", false) === false) {
         win.kiosk = true
@@ -53,6 +53,11 @@ const createWindow = () => {
                                 focusedWindow.reload();
                             }
                         }
+                    },
+                    {
+                        label: 'Force Reload',
+                        accelerator: 'CmdOrCtrl+Shift+R',
+                        role: "forceReload"
                     }
                 ]
             },

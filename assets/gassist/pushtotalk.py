@@ -1,4 +1,3 @@
-# Copyright (C) 2017 Google Inc.
 # Copyright (C) 2022 The Fake Slim Shady
 #
 # SPDX-License-Identifier: MIT

@@ -1,50 +1,55 @@
-"use strict";
 // Copyright (C) 2022 The Fake Slim Shady
 //
 // SPDX-License-Identifier: MIT
+
 const Store = require('electron-store');
 const settings = new Store();
 const root = require('electron-root-path').rootPath.replaceAll("\\", "/");
 const child_process = require('child_process');
 const loudness = require('loudness');
+async function getLoudness() {
+    console.log(await loudness.getVolume());
+}
+getLoudness();
 const defaultApps = [{
-        name: "Browser",
-        icon: "/apps/apps/Browser/ie.png",
-        href: "/apps/apps/Browser/app/browser.html",
-        pinned: true,
-        user: true,
-    }, {
-        name: "YouTube",
-        icon: "/apps/apps/YouTube/youtube.png",
-        href: "/src/webview.html?url=https://www.youtube.com/",
-        pinned: true,
-        user: true,
-    },
-    {
-        name: "Ambient",
-        icon: "/media/clock.png",
-        href: "/src/ambient.html",
-        pinned: false,
-        user: false,
-    }, {
-        name: "OutLook",
-        icon: "/apps/apps/OutLook/outlook.png",
-        href: "/src/webview.html?url=https://outlook.live.com/",
-        pinned: true,
-        user: true,
-    }, {
-        name: "Settings",
-        icon: "/media/settings.png",
-        href: "/src/settings.html",
-        pinned: true,
-        user: false,
-    }, {
-        name: "App Store",
-        icon: "/media/app-store.png",
-        href: "/src/app-store.html",
-        pinned: true,
-        user: false,
-    }];
+    name: "Browser",
+    icon: "/apps/apps/Browser/ie.png",
+    href: "/apps/apps/Browser/app/browser.html",
+    pinned: true,
+    user: true,
+}, {
+    name: "YouTube",
+    icon: "/apps/apps/YouTube/youtube.png",
+    href: "/src/webview.html?url=https://www.youtube.com/",
+    pinned: true,
+    user: true,
+},
+{
+    name: "Ambient",
+    icon: "/media/clock.png",
+    href: "/src/ambient.html",
+    pinned: false,
+    user: false,
+}, {
+    name: "OutLook",
+    icon: "/apps/apps/OutLook/outlook.png",
+    href: "/src/webview.html?url=https://outlook.live.com/",
+    pinned: true,
+    user: true,
+}, {
+    name: "Settings",
+    icon: "/media/settings.png",
+    href: "/src/settings.html",
+    pinned: true,
+    user: false,
+}, {
+    name: "App Store",
+    icon: "/media/app-store.png",
+    href: "/src/app-store.html",
+    pinned: true,
+    user: false,
+}];
+
 const fullApps = {
     initialized: false,
     shown: false,
@@ -54,7 +59,7 @@ const fullApps = {
     noResults: document.createElement("div"),
     apps: new Array(),
     resultArray: new Array(),
-    init: function () {
+    init: function() {
         this.appList.style.display = "none";
         this.appList.classList.add("animate__faster");
         document.body.appendChild(this.appList);
@@ -64,13 +69,13 @@ const fullApps = {
         this.searchBar.classList.add("full-apps-search", "p-form-text", "p-form-no-validate");
         this.searchBar.oninput = () => {
             search(this.searchBar.value);
-        };
-        this.noResults.innerHTML = "No results.";
+        }
+        this.noResults.innerHTML = "No results."
         this.noResults.style.display = "none";
         this.noResults.style.color = "#fff";
         this.appList.appendChild(this.searchBar);
         this.appList.appendChild(this.noResults);
-        settings.get("apps", defaultApps).forEach((app) => {
+        settings.get("apps", defaultApps).forEach((app: { href: any; icon: any; name: any; }) => {
             let shortcut = document.createElement("a");
             shortcut.href = root + app.href;
             shortcut.draggable = false;
@@ -87,8 +92,8 @@ const fullApps = {
         });
         this.initialized = true;
     },
-    show: function () {
-        if (!this.animating) {
+    show: function() {
+        if(!this.animating) {
             this.animating = true;
             this.appList.style.display = "block";
             this.shown = true;
@@ -96,11 +101,11 @@ const fullApps = {
             this.appList.classList.add("animate__animated", "animate__slideInUp");
             setTimeout(() => {
                 this.animating = false;
-            }, 500);
+            }, 500)
         }
     },
-    hide: function () {
-        if (!this.animating) {
+    hide: function() {
+        if(!this.animating) {
             this.shown = false;
             this.animating = true;
             this.appList.classList.remove("animate__slideInUp");
@@ -108,19 +113,19 @@ const fullApps = {
             setTimeout(() => {
                 this.appList.style.display = "none";
                 this.animating = false;
-            }, 500);
+            }, 500)
         }
     }
-};
+}
 const fuzzysort = require('fuzzysort');
-function search(query) {
+function search(query: string) {
     let results = fuzzysort.go(query, fullApps.apps, {
         limit: 50,
         all: true
     });
-    results.forEach((result) => {
+    results.forEach((result: { target: any; }) => {
         fullApps.resultArray.push(result.target);
-    });
+    })
     fullApps.noResults.style.display = "none";
     fullApps.appList.childNodes.forEach((element) => {
         if (element !== fullApps.searchBar) {
@@ -128,14 +133,13 @@ function search(query) {
             if (fullApps.resultArray.includes(element.dataset.smartdisplaypiName)) {
                 // @ts-ignore
                 element.style.display = "inline-block";
-            }
-            else {
+            } else {
                 // @ts-ignore
                 element.style.display = "none";
             }
         }
     });
-    if (fullApps.resultArray.length === 0) {
+    if(fullApps.resultArray.length === 0) {
         fullApps.noResults.style.display = "block";
     }
 }
@@ -147,7 +151,7 @@ document.body.appendChild(shortcutsWrapper);
 shortcutsWrapper.appendChild(dock);
 const shortcuts = document.createElement("DIV");
 shortcuts.classList.add("apps-container");
-dock.appendChild(shortcuts);
+dock.appendChild(shortcuts)
 let shortcut = document.createElement("A");
 let tools = document.createElement("DIV");
 tools.classList.add("tools");
@@ -159,7 +163,7 @@ padding-top: -100px;
 ">AM; 8/13/2022</span><br>
 <span><button class="p-btn"><img src="${root}/assets/feather/triangle.svg"></button><button data-p-open-actions="#actions_vol" class="p-btn"><img src="${root}/assets/feather/volume-2.svg"></button><button data-p-open-actions="#actions_power" class="p-btn"><img src="${root}/assets/feather/power.svg"></button>
 </span>`;
-document.getElementById("shortcuts").appendChild(tools);
+document.getElementById("shortcuts")!.appendChild(tools);
 let powerAction = document.createElement("DIV");
 powerAction.classList.add("p-action-background");
 powerAction.innerHTML = `<div class="p-action-big-container" id="actions_power" data-p-close-on-outside="true">
@@ -177,7 +181,7 @@ powerAction.innerHTML = `<div class="p-action-big-container" id="actions_power" 
 // Power off
 powerAction.childNodes[0].childNodes[1].childNodes[3].addEventListener("click", () => {
     child_process.exec('pkexec /sbin/shutdown -h now');
-});
+})
 // Reboot
 powerAction.childNodes[0].childNodes[1].childNodes[5].addEventListener("click", () => {
     child_process.exec('pkexec /sbin/reboot');
@@ -200,21 +204,21 @@ volAction.innerHTML = `
 document.body.appendChild(volAction);
 require("../assets/pupertino/actions.js");
 shortcut.onclick = () => {
-    if (!fullApps.initialized) {
+    if(!fullApps.initialized) {
         fullApps.init();
     }
-    if (!fullApps.shown) {
+    if(!fullApps.shown) {
         fullApps.show();
     }
     else {
         fullApps.hide();
     }
-};
+}
 shortcut.draggable = false;
 shortcut.innerHTML = `<img draggable="false" src="${root}/media/apps.png">`;
 shortcuts.appendChild(shortcut);
-settings.get("apps", defaultApps).forEach((app) => {
-    if (app.pinned) {
+settings.get("apps", defaultApps).forEach((app: { pinned: any; href: any; icon: string | string[]; }) => {
+    if(app.pinned) {
         let shortcut = document.createElement("a");
         shortcut.href = root + app.href;
         shortcut.draggable = false;
@@ -226,7 +230,7 @@ settings.get("apps", defaultApps).forEach((app) => {
     }
 });
 // GOOGLE ASSISTANT
-if (settings.get("googleAssistant", false)) {
+if(settings.get("googleAssistant", false)) {
     let googleButton = document.createElement("a");
     googleButton.draggable = false;
     googleButton.href = "#";
@@ -235,78 +239,80 @@ if (settings.get("googleAssistant", false)) {
     shortcuts.appendChild(googleButton);
     googleButton.onclick = () => {
         googleAssistant();
-    };
+    }
     const fs = require("fs");
     fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.html', () => {
-        if (!document.getElementById("googleAssistantOutput")) {
+        if(!document.getElementById("googleAssistantOutput")) {
             let googleAssistantOutput = document.createElement("iframe");
             document.body.appendChild(googleAssistantOutput);
             googleAssistantOutput.id = "googleAssistantOutput";
             googleAssistantOutput.classList.add("google-assistant-output");
             googleAssistantOutput.src = root + '/assets/gassist/SMARTDISPLAYPI_GOOGLE_ASSISTANT_OUTPUT.html';
         }
-    });
+    })
     fs.watchFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', {
         interval: 500
     }, () => {
-        fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3, data3) => {
+        fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err3: any, data3: string | string[]) => {
             if (err3) {
                 console.log(err3);
                 return;
             }
             if (data3.includes("0")) {
                 // @ts-ignore
-                googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
+                googleButton.firstChild!.src = root + '/assets/gassist/images/GoogleAssistantMicTransparent.png';
             }
-            if (data3.includes("1") && !data3.includes("RESPONDING")) {
+            if(data3.includes("1") && !data3.includes("RESPONDING")) {
                 // @ts-ignore
-                if (googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif') {
+                if(googleButton.firstChild!.src !== root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif') {
                     // @ts-ignore
-                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
+                    googleButton.firstChild!.src = root + '/assets/gassist/images/GoogleAssistantBarsTransparent.gif';
                 }
             }
             if (data3.includes("RESPONDING")) {
                 // @ts-ignore
                 if (googleButton.firstChild.src !== root + '/assets/gassist/images/GoogleAssistantTransparent.gif') {
                     // @ts-ignore
-                    googleButton.firstChild.src = root + '/assets/gassist/images/GoogleAssistantTransparent.gif';
+                    googleButton.firstChild!.src = root + '/assets/gassist/images/GoogleAssistantTransparent.gif';
                 }
             }
-        });
-    });
+        })
+    })
 }
 function googleAssistant() {
     const fs = require("fs");
-    fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err, data) => {
+    fs.readFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', 'utf8', (err: any, data: string | string[]) => {
         if (err) {
             console.log(err);
             return;
         }
-        if (data.includes("0")) {
+        if(data.includes("0")) {
             console.log("[DEV]: Google Assistant NOT Started; Starting");
-            fs.writeFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', '1', (err2) => {
+            fs.writeFile(root + '/assets/gassist/SMARTDISPLAYPI_DID_CALL_GOOGLE_ASSISTANT.yourmother', '1', (err2: any) => {
                 if (err2) {
                     console.log(err2);
                     return;
                 }
             });
         }
-        if (data.includes("1")) {
+        if(data.includes("1")) {
             console.log("[DEV]: Google Assistant Started; NOT Starting");
         }
     });
 }
+
 function closeopen() {
-    if (!fullApps.initialized) {
+    if(!fullApps.initialized) {
         fullApps.init();
     }
-    if (fullApps.shown) {
+    if(fullApps.shown) {
         fullApps.hide();
     }
     else {
         fullApps.show();
     }
 }
+
 if (settings.get("ambient", true) && !window.location.href.includes("ambient.html")) {
     function ambient() {
         window.location.href = root + "/src/ambient.html";
@@ -322,6 +328,7 @@ if (settings.get("ambient", true) && !window.location.href.includes("ambient.htm
         t = setTimeout(ambient, settings.get("ambientDelay", 30) * 60 * 1000);
     }
 }
+
 const BetterBoard = require('betterboard');
 const fs = require("fs");
 BetterBoard.init({
@@ -370,44 +377,48 @@ BetterBoard.init({
     autoScroll: true,
     capsLockActive: false,
 });
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
     BetterBoard.run('yourmom');
-});
+})
 // Hammer Time
 // Let's get it started
 // Let's get it started (up in here)
 // Let's get it started
 // Let's get it started (up in here)
 const Hammer = require(root + "/assets/hammer");
+
 var shortcutMc = new Hammer.Manager(shortcuts, {
     recognizers: [
-        [Hammer.Swipe, { direction: Hammer.DIRECTION_VERTICAL }],
+        [Hammer.Swipe,{ direction: Hammer.DIRECTION_VERTICAL }],
     ]
 });
-shortcutMc.on("swipeup swipedown", function (ev) {
-    if (!fullApps.initialized) {
+
+shortcutMc.on("swipeup swipedown", function(ev: { type: string; }) {
+    if(!fullApps.initialized) {
         fullApps.init();
         var appListMc = new Hammer.Manager(fullApps.appList, {
             recognizers: [
-                [Hammer.Swipe, { direction: Hammer.DIRECTION_VERTICAL, threshold: 1, velocity: 0.1 }],
+                [Hammer.Swipe,{ direction: Hammer.DIRECTION_VERTICAL, threshold: 1, velocity: 0.1 }],
             ]
         });
-        appListMc.on("swipeup swipedown", function (ev) {
-            if (!fullApps.initialized) {
+
+        appListMc.on("swipeup swipedown", function(ev: { type: string; }) {
+            if(!fullApps.initialized) {
                 fullApps.init();
             }
-            if (ev.type === "swipeup") {
+            if(ev.type === "swipeup") {
                 fullApps.show();
             }
-            if (ev.type === "swipedown") {
+            if(ev.type === "swipedown"){
                 fullApps.hide();
             }
         });
     }
-    if (ev.type === "swipeup") {
+    if(ev.type === "swipeup") {
         fullApps.show();
     }
-    if (ev.type === "swipedown") {
+    if(ev.type === "swipedown"){
         fullApps.hide();
     }
 });
+

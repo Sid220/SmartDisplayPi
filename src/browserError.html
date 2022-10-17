@@ -11,11 +11,11 @@ SPDX-License-Identifier: MIT
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../../../style.css">
 
 </head>
 
-<body style="margin: 0; background-color: #EFEFEF;">
+<body style="margin: 0; font-family: Inter,sans-serif; color: white">
     <center>
         <h1>Error!</h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 512 512">
@@ -29,9 +29,6 @@ SPDX-License-Identifier: MIT
     <script>
         document.getElementById("error").innerHTML = decodeURI(new URLSearchParams(window.location.search).get('error')).replace("ERR_", "");
         document.getElementById("errorCode").innerHTML = "Error Code: " + decodeURI(new URLSearchParams(window.location.search).get('errorcode'));
-        if(decodeURI(new URLSearchParams(window.location.search).get('error')).replace("ERR_", "") === "INTERNET_DISCONNECTED"){
-            document.getElementById("error").innerHTML = "No Internet!<br><button onclick='window.location.href = `assets/dino/index.html`'>Play a game</button>";
-        }
     </script>
 </body>
 

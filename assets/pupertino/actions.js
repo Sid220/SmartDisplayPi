@@ -1,8 +1,4 @@
-// Copyright (C) 2022 Edgar Pérez
-//
-// SPDX-License-Identifier: MIT
-
-(function (document) {
+    (function (document) {
 
         var p_actions = document.querySelectorAll("[data-p-open-actions]");
         var actions = document.querySelectorAll(".p-action-big-container");

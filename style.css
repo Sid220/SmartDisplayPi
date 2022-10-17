@@ -39,6 +39,9 @@ html, body {
   overflow-x: hidden;
   font-family: Inter,sans-serif;
 }
+.p-action-big-container {
+  z-index: 100;
+}
 body {
   --bg-docs: #1a1a1a;
   --color-docs: #e6e6e6;
@@ -182,10 +185,12 @@ webview {
 
 
 .widget {
-  background: rgba(100, 100, 100, 0.3);
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   margin-bottom: 3.3333%;
+  background: linear-gradient(163.27deg, rgba(47, 47, 47, 0.5925) 47.94%, rgba(33, 33, 33, 0.75) 77.13%);
+  mix-blend-mode: normal;
+  border: 1.9594px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(188.047px);
 }
 
 

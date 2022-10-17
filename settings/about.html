@@ -11,10 +11,12 @@ SPDX-License-Identifier: MIT
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div id="settingsMenuBar"><span onclick="window.location = '../settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div><br><br>
+<div id="settingsMenuBar"><span onclick="window.location = '../src/settings.html'"><span class="material-icons-round">arrow_back_ios</span> Settings</span></div><br><br>
 <p><b><u>SmartDisplayPi Version</u></b>: <span id="version">v0.0.1.alpha</span> - Tactical Tree</p>
   <p id="ubuntu-version"></p>
   <p id="[DEVMODE]"></p>
+<p><b><u>Google Assistant:</u></b> <span id="gassist"></span></p>
+<p><b><u>Awesome:</u></b> Yes</p>
   <script src="../scripts/universal.js"></script>
 <script>
     const currentVersion = "v0.2.0.alpha";
@@ -68,6 +70,7 @@ SPDX-License-Identifier: MIT
 } else {
           document.getElementById("version").innerHTML = currentVersion + "<br><b><u>Error:</u></b> Could not get the latest version.";
       }
+      document.getElementById("gassist").innerText = settings.get("googleAssistant", false) ? "Yes" : "No";
   }
 getVersion();
 </script>

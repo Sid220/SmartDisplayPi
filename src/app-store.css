@@ -1,0 +1,19 @@
+/*
+ * Copyright (C) 2022 The Fake Slim Shady
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#output {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: black;
+    white-space: pre;
+    display: none;
+    margin: 0;
+    z-index: 12;
+}
+body {
+    margin: 0;
+}

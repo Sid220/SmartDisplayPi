@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 
 </head>
 
@@ -19,8 +19,8 @@ SPDX-License-Identifier: MIT
     <webview src="about:blank" style="height: calc(100vh - 13vh - 2.5vh);"
         useragent="Mozilla/5.0 (Linux; Android 12; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36 SmartDisplayPi">
     </webview>
-    <script src="scripts/universal.js"></script>
-    <script src="scripts/injection.js"></script>
+    <script src="../scripts/universal.js"></script>
+    <script src="../scripts/injection.js"></script>
     <script>
         const webview = document.querySelector('webview');
         var url = new URLSearchParams(window.location.search).get('url');

@@ -31,14 +31,14 @@ SPDX-License-Identifier: MIT
   </span><img src="../media/default-background.jpg" class="wallpaper-wallpaper">
 </div>
 <div id="bar">
-  <button class="p-btn p-prim-col" onclick="window.location = '../index.html'">Finish</button>
-  <button class="p-btn" onclick="window.location = '../index.html'" id="nextbutton">Next</button>
+  <button class="p-btn p-prim-col" onclick="window.location = '../src/index.html'">Finish</button>
+  <button class="p-btn" onclick="window.location = '../src/index.html'" id="nextbutton">Next</button>
   <button class="p-btn" onclick="window.location = 'setup2.html'">Previous</button>
 </div>
 <div id="center">
   <h2 class="words">Would you like to install Google Assistant now?</h2>
   <p>You can install it later.</p>
-  <input type="button" class="p-btn p-prim-col" id="install" onclick="installGoogleAssistant();" value="Install"> <input class="p-btn" type="button" id="skip" onclick="window.location = '../index.html'" value="Skip">
+  <input type="button" class="p-btn p-prim-col" id="install" onclick="installGoogleAssistant();" value="Install"> <input class="p-btn" type="button" id="skip" onclick="window.location = '../src/index.html'" value="Skip">
   <pre style="color: white;display: none; background: black;font-family: auto;padding: 10px;max-height: 50vh;overflow-y: scroll;" id="output"></pre>
 </div>
 <script>
@@ -84,7 +84,7 @@ SPDX-License-Identifier: MIT
         document.getElementById("output").innerHTML += "<span class='err'>Error: " + code + "</span>";
         document.createElement("p").innerText = "There was an error installing Google Assistant. Please check the output for more information and report any issues to the developer. <a href='#' onclick='window.location.reload()'>Retry</a>";
       }
-      document.getElementById("install").onclick = () => window.location = "../index.html";
+      document.getElementById("install").onclick = () => window.location = "../src/index.html";
       document.getElementById("install").disabled = false;
       document.getElementById("install").value = "Continue";
       document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;

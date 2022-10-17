@@ -1,23 +1,25 @@
-"use strict";
 // Copyright (C) 2022 The Fake Slim Shady
 //
 // SPDX-License-Identifier: MIT
-function preloadImage(image) {
-    var img = new Image();
-    img.src = image;
+
+function preloadImage(image: string) {
+        var img = new Image();
+        img.src = image;
 }
+
 let nextImage = root + "/media/default-background.jpg";
 function updateBackground() {
-    document.getElementById("background").style.backgroundImage = "url('" + nextImage + "')";
+    document.getElementById("background")!.style.backgroundImage = "url('" + nextImage + "')";
     setTimeout(() => {
         fetch("https://backend-sdp.vestal.tk/background.php")
             .then(response => response.text())
             .then(data => {
-            nextImage = data;
-            preloadImage(nextImage);
-        });
+                nextImage = data;
+                preloadImage(nextImage);
+            });
     }, settings.get("background_refresh_rate", 10000));
 }
+
 window.onload = function () {
     let widgets = settings.get("widgets", [
         {
@@ -45,18 +47,23 @@ window.onload = function () {
             usr: true,
             type: "WEBSITE",
             source: "https://calendar.google.com/calendar/u/0/r/customday"
-        }
-    ]);
-    let WidgetTypes;
-    (function (WidgetTypes) {
-        WidgetTypes["INJECTED_HTML"] = "INJECTED_HTML";
-        WidgetTypes["WEBSITE"] = "WEBSITE";
-        WidgetTypes["LOCAL_HTML"] = "LOCAL_HTML";
-    })(WidgetTypes || (WidgetTypes = {}));
-    widgets.forEach((widget) => {
-        if (widget.usr) {
+        }]);
+    enum WidgetTypes {
+        INJECTED_HTML = "INJECTED_HTML",
+        WEBSITE = "WEBSITE",
+        LOCAL_HTML = "LOCAL_HTML",
+    }
+    interface WidgetDetails {
+        name: string,
+        usr: boolean,
+        type: WidgetTypes,
+        source: string,
+        uuid: string | null,
+    }
+    widgets.forEach((widget: WidgetDetails) => {
+        if(widget.usr) {
             var webview = document.createElement("webview");
-            webview.addEventListener('did-fail-load', (error) => {
+            webview.addEventListener('did-fail-load', (error: any) => {
                 console.log(error.errorCode);
                 if (error.isMainFrame) {
                     // @ts-ignore
@@ -67,17 +74,16 @@ window.onload = function () {
                 if (settings.get("autoloadWidgets", false)) {
                     // @ts-ignore
                     webview.src = widget.source;
-                }
-                else {
+                } else {
                     webview.setAttribute("src", "notloaded.html?url=" + widget.source);
                 }
-            }
-            else {
+            } else {
                 // @ts-ignore
                 webview.src = "about:blank";
                 webview.style.userSelect = "none";
             }
             webview.setAttribute("useragent", "Mozilla/5.0 (Linux; Android 12; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.104 Mobile Safari/537.36 SmartDisplayPi");
+
             var div = document.createElement("div");
             div.classList.add("widget");
             div.style.width = settings.get("widgetWidth", 200) + "px";
@@ -90,24 +96,25 @@ window.onload = function () {
             div.appendChild(h3);
             div.appendChild(webview);
             div.setAttribute("data-item-id", widgets.indexOf(widget));
-            document.getElementById("grid").appendChild(div);
+            document.getElementById("grid")!.appendChild(div);
             webview.addEventListener("did-start-loading", function () {
                 // @ts-ignore
                 if (webview.src.includes("notloaded.html?url=")) {
                     // @ts-ignore
                     this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "none";
-                }
-                else {
+
+                } else {
                     // @ts-ignore
                     this.parentElement.getElementsByTagName("h3")[0].getElementsByTagName("span")[0].style.display = "block";
+
                 }
             });
         }
         else {
-            if (widget.type === "INJECTED_HTML") {
+            if(widget.type === "INJECTED_HTML") {
                 const htmp = require("htmpp");
-                htmp.getAll("apps/widgets/" + widget.name + "/" + widget.source, function (data, err) {
-                    if (err) {
+                htmp.getAll("apps/widgets/" + widget.name + "/" + widget.source, function(data: any, err: string) {
+                    if(err) {
                         console.log(err);
                     }
                     else {
@@ -120,17 +127,18 @@ window.onload = function () {
                             container.id = widget.uuid;
                         }
                         container.setAttribute("data-item-id", widgets.indexOf(widget));
-                        document.getElementById("grid").appendChild(container);
+                        document.getElementById("grid")!.appendChild(container);
                         let style = document.createElement("style");
                         style.innerHTML = data.css;
                         document.head.appendChild(style);
                         let js = new Function(data.js);
                         js();
                     }
-                });
+                })
             }
         }
     });
+
     updateBackground();
     setInterval(updateBackground, settings.get("background_refresh_rate", 10000));
     const Packery = require('packery');
@@ -144,26 +152,31 @@ window.onload = function () {
     if (settings.get("editingHome", false)) {
         const Draggabilly = require('draggabilly');
         // external js: packery.pkgd.js, draggabilly.pkgd.js
+
         // add Packery.prototype methods
+
         // get JSON-friendly data for items positions
-        Packery.prototype.getShiftPositions = function (attrName) {
+        Packery.prototype.getShiftPositions = function (attrName: any) {
             attrName = attrName || 'id';
             var _this = this;
-            return this.items.map(function (item) {
+            return this.items.map(function (item: any) {
                 return {
                     attr: item.element.getAttribute(attrName),
                     x: item.rect.x / _this.packer.width
-                };
+                }
             });
         };
+
         // -----------------------------//
+
         // make draggable
-        var items = grid.querySelectorAll('.widget');
+        var items = grid!.querySelectorAll('.widget');
         for (var i = 0; i < items.length; i++) {
             var itemElem = items[i];
             var draggie = new Draggabilly(itemElem);
             pckry.bindDraggabillyEvents(draggie);
         }
+
         // save drag positions on event
         pckry.on('dragItemPositioned', function () {
             var positions = pckry.getShiftPositions('data-item-id');
@@ -176,9 +189,10 @@ window.onload = function () {
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
 </svg></span>`;
         document.body.appendChild(editingBar);
-        document.getElementById("shortcuts").style.display = "none";
+        document.getElementById("shortcuts")!.style.display = "none";
+
     }
-    Packery.prototype.initShiftLayout = function (positions, attr) {
+    Packery.prototype.initShiftLayout = function (positions: any, attr: any) {
         if (!positions) {
             // if no initial positions, run packery layout
             this.layout();
@@ -188,18 +202,18 @@ window.onload = function () {
         if (typeof positions == 'string') {
             try {
                 positions = JSON.parse(positions);
-            }
-            catch (error) {
+            } catch (error) {
                 console.error('JSON parse error: ' + error);
                 this.layout();
                 return;
             }
         }
+
         attr = attr || 'id'; // default to id attribute
         this._resetLayout();
         // set item order and horizontal position from saved positions
-        this.items = positions.map(function (itemPosition) {
-            var selector = '[' + attr + '="' + itemPosition.attr + '"]';
+        this.items = positions.map(function (itemPosition: any) {
+            var selector = '[' + attr + '="' + itemPosition.attr + '"]'
             // @ts-ignore
             var itemElem = this.element.querySelector(selector);
             // @ts-ignore
@@ -209,13 +223,14 @@ window.onload = function () {
             return item;
         }, this);
         this.shiftLayout();
+
     };
     // get saved dragged positions
     var initPositions = settings.get('dragPositions');
     // init layout with saved positions
     pckry.initShiftLayout(initPositions, 'data-item-id');
-};
-function kill(webview) {
+}
+function kill(webview: any) {
     let oldsrc = webview.src;
     webview.src = "notloaded.html?url=" + oldsrc;
 }
